@@ -1,20 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 13:19:15 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/10 23:16:31 by nakkim           ###   ########.fr       */
+/*   Created: 2021/11/17 21:46:14 by nakkim            #+#    #+#             */
+/*   Updated: 2021/11/17 21:59:33 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalnum(int c)
+void	ft_putnbr_fd(int n, int fd)
 {
-	if (ft_isalpha(c) || ft_isdigit(c))
-		return (1);
-	return (0);
+	long long	div;
+	long long	tmp_n;
+	char		c;
+
+	div = 1;
+	tmp_n = (long long)n;
+	if (tmp_n < 0)
+	{
+		write(fd, "-", 1);
+		tmp_n = -tmp_n;
+	}
+	while (tmp_n / div > 9)
+		div *= 10;
+	while (div > 0)
+	{
+		c = tmp_n / div % 10 + 48;
+		write(fd, &c, 1);
+		div /= 10;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 21:39:04 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/11 21:44:10 by nakkim           ###   ########.fr       */
+/*   Updated: 2021/11/17 20:00:02 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	*ft_calloc(size_t arr_size, size_t size)
 	ptr = malloc(arr_size * size);
 	if (!ptr)
 		return (0);
-	ft_bzero(ptr, size);
+	ft_bzero(ptr, arr_size);
 	return (ptr);
 }

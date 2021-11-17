@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 21:03:53 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/11 22:22:15 by nakkim           ###   ########.fr       */
+/*   Updated: 2021/11/17 19:53:12 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_atoi(const char *ptr)
 {
-	int	sign;
-	int	num;
+	int			sign;
+	long long	num;
 
 	sign = 1;
 	num = 0;

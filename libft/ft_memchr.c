@@ -12,15 +12,15 @@
 
 #include "libft.h"
 
-void	*ft_memchr(const void *str, int ch, size_t size)
+void	*ft_memchr(const void *s, int c, size_t size)
 {
 	size_t	index;
 
 	index = 0;
 	while (index < size)
 	{
-		if (((char *)str)[index] == ch)
-			return (&((char *)str)[index]);
+		if (((char *)s)[index] == c)
+			return (&((char *)s)[index]);
 		index++;
 	}
 	return (0);

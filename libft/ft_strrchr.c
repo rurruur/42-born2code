@@ -10,20 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strrchr(const char *str, int ch)
+char	*ft_strrchr(const char *s, int c)
 {
 	char	*tmp;
 	char	*last_match;
 
-	tmp = (char *)str;
+	tmp = (char *)s;
 	last_match = 0;
 	while (*tmp)
 	{
-		if (*tmp == ch)
+		if (*tmp == c)
 			last_match = tmp;
 		tmp++;
 	}
-	if (!ch)
+	if (!c)
 		return (tmp);
 	return (last_match);
 }
