@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:38:09 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/11 21:43:39 by nakkim           ###   ########.fr       */
+/*   Updated: 2021/11/17 18:52:26 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strnstr(const char *s1, const char *s2, size_t n);
 int		ft_atoi(const char *ptr);
 void	*ft_calloc(size_t arr_size, size_t size);
+char	*ft_itoa(int n);
 
 #endif
