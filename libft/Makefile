@@ -7,14 +7,24 @@ OBJS = ft_isalpha.o ft_isalnum.o ft_isdigit.o ft_isascii.o ft_isprint.o \
 	   ft_strncmp.o ft_memchr.o ft_memcmp.o ft_strnstr.o ft_atoi.o ft_calloc.o \
 	   ft_itoa.o ft_strmapi.o ft_striteri.o ft_putchar_fd.o ft_putstr_fd.o \
 	   ft_putendl_fd.o ft_putnbr_fd.o
+BONUS_OBJS = ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o \
+			 ft_lstadd_back.o ft_lstdelone.o ft_lstclear.o ft_lstiter.o \
+			 ft_lstmap.o
 SRCS = $(OBJS:.o=.c)
 
 all: $(NAME)
 
+so:
+	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRCS) $(BONUS_OBJS:.o=.c)
+	gcc -nostartfiles -shared -o libft.so $(OBJS) $(BONUS_OBJS)
+
 $(NAME): $(OBJS)
 	ar -cr -o $@ $^
 
-clean: $(OBJS)
+bonus: $(OBJS) $(BONUS_OBJS)
+	ar -cr -o $(NAME) $^
+
+clean: $(OBJS) $(BONUS_OBJS)
 	rm -f $^
 
 fclean: clean
