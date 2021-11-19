@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 21:03:53 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/19 13:23:11 by nakkim           ###   ########.fr       */
+/*   Created: 2021/11/19 11:07:31 by nakkim            #+#    #+#             */
+/*   Updated: 2021/11/19 11:28:59 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *ptr)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int			sign;
-	long long	num;
+	char	*substr;
 
-	sign = 1;
-	num = 0;
-	while (*ptr == ' ' || (*ptr >= 9 && *ptr <= 13))
-		ptr++;
-	if (*ptr == '-' || *ptr == '+')
-	{
-		if (*ptr == '-')
-			sign = -sign;
-		ptr++;
-	}
-	while (ft_isdigit(*ptr))
-		num = num * 10 + *ptr++ - '0';
-	return (num * sign);
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!substr)
+		return (0);
+	ft_strlcpy(substr, s + start, len + 1);
+	return (substr);
 }

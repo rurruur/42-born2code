@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 21:03:53 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/19 13:23:11 by nakkim           ###   ########.fr       */
+/*   Created: 2021/11/19 10:58:58 by nakkim            #+#    #+#             */
+/*   Updated: 2021/11/19 11:05:32 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *ptr)
+char	*ft_strdup(const char *s)
 {
-	int			sign;
-	long long	num;
+	char	*dest;
+	size_t	len_s;
 
-	sign = 1;
-	num = 0;
-	while (*ptr == ' ' || (*ptr >= 9 && *ptr <= 13))
-		ptr++;
-	if (*ptr == '-' || *ptr == '+')
-	{
-		if (*ptr == '-')
-			sign = -sign;
-		ptr++;
-	}
-	while (ft_isdigit(*ptr))
-		num = num * 10 + *ptr++ - '0';
-	return (num * sign);
+	len_s = ft_strlen(s) + 1;
+	dest = (char *)malloc(sizeof(char) * len_s);
+	if (!dest)
+		return (0);
+	ft_strlcpy(dest, s, len_s);
+	return (dest);
 }
