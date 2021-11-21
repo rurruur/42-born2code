@@ -15,18 +15,14 @@ SRCS = $(OBJS:.o=.c)
 
 all: $(NAME)
 
-so:
-	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRCS) $(BONUS_OBJS:.o=.c)
-	gcc -nostartfiles -shared -o libft.so $(OBJS) $(BONUS_OBJS)
-
 $(NAME): $(OBJS)
-	ar -cr -o $@ $^
+	ar rc $@ $^
 
 bonus: $(OBJS) $(BONUS_OBJS)
-	ar -cr -o $(NAME) $^
+	ar rc $(NAME) $^
 
-clean: $(OBJS) $(BONUS_OBJS)
-	rm -f $^
+clean:
+	rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
 	rm -f $(NAME)

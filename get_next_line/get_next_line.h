@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 20:40:38 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/21 15:59:14 by nakkim           ###   ########.fr       */
+/*   Created: 2021/11/21 16:12:40 by nakkim            #+#    #+#             */
+/*   Updated: 2021/11/21 16:13:35 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-void	*ft_memchr(const void *s, int c, size_t size)
-{
-	size_t	index;
+# include <unistd.h>
+# include <stdlib.h>
 
-	index = 0;
-	while (index < size)
-	{
-		if (((unsigned char *)s)[index] == (unsigned char)c)
-			return (&((unsigned char *)s)[index]);
-		index++;
-	}
-	return (0);
-}
+unsigned long long   get_strlen(char *s);
+long long            find_end(char *buff);
+void                 str_cpy(char *dest, char *str, int index);
+char	                *create_new_str(char *result, char *buff, int index);
+
+#endif

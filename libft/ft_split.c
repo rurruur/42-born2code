@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 11:44:38 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/19 13:01:43 by nakkim           ###   ########.fr       */
+/*   Updated: 2021/11/21 15:40:49 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static int	alloc_each(char **dest, char *s, char c, int dest_index)
 	{
 		if (*s == c && size)
 		{
-			dest[dest_index] = (char *)malloc(sizeof(char) * (size + 1));
 			if (!alloc_and_copy(dest, s, size, dest_index))
 				return (0);
 			dest_index++;
