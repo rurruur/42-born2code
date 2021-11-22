@@ -1,0 +1,10 @@
+파일 입력
+백업?
+	o -> 백업 안에 '\n', '\0', EOF 체크
+		있으면 해당 위치까지 result에 복사 후 백업을 해당 위치(index_end) + 1로 옮김and return result;
+		없으면 전체를 result에 복사 후 read 수행
+	x -> read 수행
+read 수행
+	버퍼 안에 '\n', '\0', EOF 체크
+		있으면 해당 위치까지 result에 복사 후 백업을 index_end + 1로 옮기고 return result;
+		없으면 전체를 result에 복사 후 read 수

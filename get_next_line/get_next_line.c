@@ -35,10 +35,8 @@ long long	find_end(char *buff)
 
 	index = -1;
 	while (++index < BUFFER_SIZE)
-	{
-		if ( !buff[index] || buff[index] == '\n' || buff[index] == EOF)
+		if (!buff[index]|| buff[index] == EOF || buff[index] == '\n')
 			return (index + 1);
-	}
 	return (-1);
 }
 
@@ -48,18 +46,18 @@ void str_cpy(char *dest, char *str, long long index)
         dest[index] = str[index];
 }
 
-char	*create_new_str(char *result, char *buff, long long index)
+char    *create_result(char *result, char *buff, long long index)
 {
-	char				*dest;
-    unsigned long long  dest_size;
-	unsigned long long	len_result;
+    char                  *dest;
+    unsigned long long   dest_size;
+    unsigned long long   len_result;
 
-	len_result = get_strlen(result);
-	if (index < 0)
-        dest_size = len_result + BUFFER_SIZE + 1;
-	else
-        dest_size = len_result + index + 1;
-    dest = (char *)malloc(sizeof(char) * dest_size);
+    len_result = get_strlen(result);
+    if (index < 0)
+        dest_size = len_result + BUFFER_SIZE;
+    else
+        dest_size = len_result + index;
+    dest = (char *)malloc(sizeof(char) * (dest_size + 1));
     if (dest)
     {
         str_cpy(dest, result, len_result);
@@ -67,6 +65,7 @@ char	*create_new_str(char *result, char *buff, long long index)
             str_cpy(dest + len_result, buff, BUFFER_SIZE);
         else
             str_cpy(dest + len_result, buff, index);
+        dest[dest_size] = '\0';
     }
     free(result);
     return (dest);
@@ -74,27 +73,41 @@ char	*create_new_str(char *result, char *buff, long long index)
 
 char	*get_next_line(int fd)
 {
-	char		*buff;
-	char		*result;
-	long long	index_end;
+	char			buff[BUFFER_SIZE];
+	static char		*backup;
+	static char		*result;
+	long long		index_end;
 
-	buff = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	printf("backup: [%p] \"%s\"\n", backup, backup);
+	//buff = (char *)malloc(sizeof(char) * BUFFER_SIZE);
 	result = (char *)malloc(sizeof(char));
-	if (!buff || !result)
-		return (0);
+	*result = '\0';
+	//if (!buff)
+	//	return (0);
+	if (backup)
+	{
+		index_end = find_end(backup);
+		result = create_result(result, backup, index_end);
+	}
 	if (read(fd, buff, BUFFER_SIZE) < 0)
 		return (0);
-	*result = '\0';
 	index_end = find_end(buff);
-	result = create_new_str(result, buff, index_end);
+	result = create_result(result, buff, index_end);
+	if (!result)
+		return (0);
 	while (index_end < 0)
 	{
 		if (read(fd, buff, BUFFER_SIZE) < 0)
 			return (0);
 		index_end = find_end(buff);
-		result = create_new_str(result, buff, index_end);
+		result = create_result(result, buff, index_end);
+		if (!result)
+			return (0);
 	}
-	free(buff);
+	// 백업을 해당 위치로 옮김
+	backup = buff + index_end;
+	printf("backup: [%p] \"%s\"\n", backup, backup);
+	//free(buff);
 	return (result);
 }
 
@@ -106,17 +119,13 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 	{
 		result = get_next_line(0);
-		printf("%s\n", result);
-		free(result);
+		printf("result: %s", result);
 		result = get_next_line(0);
-		printf("%s\n", result);
-		free(result);
+		printf("result: %s", result);
 		result = get_next_line(0);
-		printf("%s\n", result);
-		free(result);
+		printf("result: %s", result);
 		result = get_next_line(0);
-		printf("%s\n", result);
-		free(result);
+		printf("result: %s", result);
 	}
 	if (argc == 2)
 	{
@@ -125,17 +134,11 @@ int	main(int argc, char **argv)
 		if (fd >= 0)
 		{
 			result = get_next_line(fd);
-			printf("%s\n", result);
-			free(result);
+			printf("result: %s---size: %llu\n", result, get_strlen(result));
 			result = get_next_line(fd);
-			printf("%s\n", result);
-			free(result);
+			printf("result: %s---size: %llu\n", result, get_strlen(result));
 			result = get_next_line(fd);
-			printf("%s\n", result);
-			free(result);
-			result = get_next_line(fd);
-			printf("%s\n", result);
-			free(result);
+			printf("result: %s---size: %llu\n", result, get_strlen(result));
 		}
 		close(fd);
 	}
