@@ -47,18 +47,20 @@ char	*my_strjoin(char *s1, char *s2)
 {
 	char	*dest;
 	int		len_s1;
-	int		len_s2;
+	int		index_s1;
+	int		index_s2;
 
 	len_s1 = my_strlen(s1);
-	len_s2 = my_strlen(s2);
-	dest = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1));
+	index_s1 = -1;
+	index_s2 = -1;
+	dest = (char *)malloc(sizeof(char) * (len_s1 + BUFFER_SIZE + 1));
 	if (!dest)
 		return (0);
-	dest[len_s1 + len_s2] = '\0';
-	while (len_s2-- > 0)
-		dest[len_s1 + len_s2] = s2[len_s2];
-	while (len_s1-- > 0)
-		dest[len_s1] = s1[len_s1];
+	dest[len_s1 + BUFFER_SIZE] = '\0';
+	while (++index_s1 < len_s1)
+		dest[index_s1] = s1[index_s1];
+	while (++index_s2 < BUFFER_SIZE)
+		dest[len_s1 + index_s2] = s2[index_s2];
 	free(s1);
 	return (dest);
 }
@@ -79,10 +81,13 @@ char	*get_result_and_backup(char *str, char **backup)
 	char	*result;
 	int		index_nl;
 
-	if (*backup)
-		free(*backup);
 	if (find_new_line(str) < 0)
+	{
+		**backup = '\0';
 		return (str);
+	}
+	else if (*backup)
+		free(*backup);
 	index_nl = find_new_line(str);
 	result = my_strndup(str, index_nl + 1);
 	*backup = my_strndup(str + index_nl + 1, my_strlen(str + index_nl + 1));
@@ -95,16 +100,22 @@ char	*get_next_line(int fd)
 	char			buff[BUFFER_SIZE];
 	static char		*backup;
 	char			*result;
+	int				read_value;
 
 	result = my_strndup(backup, my_strlen(backup));
 	if (!result)
 		return (0);
-	while (find_new_line(result) < 0 && read(fd, buff, BUFFER_SIZE) > 0)
+	read_value = read(fd, buff, BUFFER_SIZE);
+	while (find_new_line(result) < 0 && read_value > 0)
 	{
+		printf("result: %c\tread: %d\n", *result, read_value);
 		result = my_strjoin(result, buff);
 		if (!result)
 			return (0);
+		read_value = read(fd, buff, BUFFER_SIZE);
 	}
+	if ((!(*result) || *result == 3) && !read_value)
+		return (0);
 	return (get_result_and_backup(result, &backup));
 }
 
@@ -118,9 +129,8 @@ int	main(int argc, char **argv)
 		result = get_next_line(0);
 		while (result)
 		{
-			printf("result: %s---size: %d\n", result, my_strlen(result));
+			printf("====================result: %s---size: %d\n\n", result, my_strlen(result));
 			free(result);
-			puts("free result -- main");
 			result = get_next_line(0);
 		}
 	}
@@ -133,13 +143,14 @@ int	main(int argc, char **argv)
 			result = get_next_line(fd);
 			while (result)
 			{
-				printf("result: [%p] %s---size: %d\n", result, result, my_strlen(result));
+				printf("=================result: %s---size: %d\n\n", result, my_strlen(result));
 				free(result);
-				puts("free result -- main");
 				result = get_next_line(fd);
 			}
 		}
 		close(fd);
 	}
+	while (1)
+	{}
 	return (0);
 }
