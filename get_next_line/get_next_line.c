@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 16:04:04 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/21 16:52:47 by nakkim           ###   ########.fr       */
+/*   Updated: 2021/11/23 13:59:29 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,99 +16,96 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-// null or EOF -> add '\0'
-// '\n' -> add '\n' and '\0'
-
-unsigned long long   get_strlen(char *s)
+int   my_strlen(char *s)
 {
-    unsigned long long  len;
+    int  len;
 
     len = 0;
+	if (!s)
+		return (0);
     while(s[len])
         len++;
     return (len);
 }
 
-long long	find_end(char *buff)
+char	*my_strndup(char *src, int size)
 {
-	long long	index;
+	char	*dest;
+	int		index;
 
 	index = -1;
-	while (++index < BUFFER_SIZE)
-		if (!buff[index]|| buff[index] == EOF || buff[index] == '\n')
-			return (index + 1);
+	dest = (char *)malloc(sizeof(char) * (size + 1));
+	if (!dest)
+		return (0);
+	while (++index < size && src[index])
+		dest[index] = src[index];
+	dest[index] = '\0';
+	return (dest);
+}
+
+char	*my_strjoin(char *s1, char *s2)
+{
+	char	*dest;
+	int		len_s1;
+	int		len_s2;
+
+	len_s1 = my_strlen(s1);
+	len_s2 = my_strlen(s2);
+	dest = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1));
+	if (!dest)
+		return (0);
+	dest[len_s1 + len_s2] = '\0';
+	while (len_s2-- > 0)
+		dest[len_s1 + len_s2] = s2[len_s2];
+	while (len_s1-- > 0)
+		dest[len_s1] = s1[len_s1];
+	free(s1);
+	return (dest);
+}
+
+int	find_new_line(char *str)
+{
+	int	index;
+
+	index = -1;
+	while (str[++index])
+		if (str[index] == '\n')
+			return (index);
 	return (-1);
 }
 
-void str_cpy(char *dest, char *str, long long index)
+char	*get_result_and_backup(char *str, char **backup)
 {
-    while (index-- > 0)
-        dest[index] = str[index];
-}
+	char	*result;
+	int		index_nl;
 
-char    *create_result(char *result, char *buff, long long index)
-{
-    char                  *dest;
-    unsigned long long   dest_size;
-    unsigned long long   len_result;
-
-    len_result = get_strlen(result);
-    if (index < 0)
-        dest_size = len_result + BUFFER_SIZE;
-    else
-        dest_size = len_result + index;
-    dest = (char *)malloc(sizeof(char) * (dest_size + 1));
-    if (dest)
-    {
-        str_cpy(dest, result, len_result);
-        if (index < 0)
-            str_cpy(dest + len_result, buff, BUFFER_SIZE);
-        else
-            str_cpy(dest + len_result, buff, index);
-        dest[dest_size] = '\0';
-    }
-    free(result);
-    return (dest);
+	if (*backup)
+		free(*backup);
+	if (find_new_line(str) < 0)
+		return (str);
+	index_nl = find_new_line(str);
+	result = my_strndup(str, index_nl + 1);
+	*backup = my_strndup(str + index_nl + 1, my_strlen(str + index_nl + 1));
+	free(str);
+	return (result);
 }
 
 char	*get_next_line(int fd)
 {
 	char			buff[BUFFER_SIZE];
 	static char		*backup;
-	static char		*result;
-	long long		index_end;
+	char			*result;
 
-	printf("backup: [%p] \"%s\"\n", backup, backup);
-	//buff = (char *)malloc(sizeof(char) * BUFFER_SIZE);
-	result = (char *)malloc(sizeof(char));
-	*result = '\0';
-	//if (!buff)
-	//	return (0);
-	if (backup)
-	{
-		index_end = find_end(backup);
-		result = create_result(result, backup, index_end);
-	}
-	if (read(fd, buff, BUFFER_SIZE) < 0)
-		return (0);
-	index_end = find_end(buff);
-	result = create_result(result, buff, index_end);
+	result = my_strndup(backup, my_strlen(backup));
 	if (!result)
 		return (0);
-	while (index_end < 0)
+	while (find_new_line(result) < 0 && read(fd, buff, BUFFER_SIZE) > 0)
 	{
-		if (read(fd, buff, BUFFER_SIZE) < 0)
-			return (0);
-		index_end = find_end(buff);
-		result = create_result(result, buff, index_end);
+		result = my_strjoin(result, buff);
 		if (!result)
 			return (0);
 	}
-	// 백업을 해당 위치로 옮김
-	backup = buff + index_end;
-	printf("backup: [%p] \"%s\"\n", backup, backup);
-	//free(buff);
-	return (result);
+	return (get_result_and_backup(result, &backup));
 }
 
 int	main(int argc, char **argv)
@@ -119,13 +116,13 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 	{
 		result = get_next_line(0);
-		printf("result: %s", result);
-		result = get_next_line(0);
-		printf("result: %s", result);
-		result = get_next_line(0);
-		printf("result: %s", result);
-		result = get_next_line(0);
-		printf("result: %s", result);
+		while (result)
+		{
+			printf("result: %s---size: %d\n", result, my_strlen(result));
+			free(result);
+			puts("free result -- main");
+			result = get_next_line(0);
+		}
 	}
 	if (argc == 2)
 	{
@@ -134,11 +131,13 @@ int	main(int argc, char **argv)
 		if (fd >= 0)
 		{
 			result = get_next_line(fd);
-			printf("result: %s---size: %llu\n", result, get_strlen(result));
-			result = get_next_line(fd);
-			printf("result: %s---size: %llu\n", result, get_strlen(result));
-			result = get_next_line(fd);
-			printf("result: %s---size: %llu\n", result, get_strlen(result));
+			while (result)
+			{
+				printf("result: [%p] %s---size: %d\n", result, result, my_strlen(result));
+				free(result);
+				puts("free result -- main");
+				result = get_next_line(fd);
+			}
 		}
 		close(fd);
 	}
