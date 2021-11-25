@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 16:12:40 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/21 16:13:35 by nakkim           ###   ########.fr       */
+/*   Updated: 2021/11/25 15:31:15 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-unsigned long long   get_strlen(char *s);
-long long            find_end(char *buff);
-void                 str_cpy(char *dest, char *str, int index);
-char	                *create_new_str(char *result, char *buff, int index);
+char	*get_next_line(int fd);
+char	*get_result_and_backup(char *str, char **backup);
+int		find_new_line(char *str);
+char	*my_strjoin(char *s1, char *s2, int read_size);
+char	*my_strndup(char *src, int size);
+int		my_strlen(char *s);
 
 #endif
