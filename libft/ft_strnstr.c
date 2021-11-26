@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 21:28:24 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/17 19:43:50 by nakkim           ###   ########.fr       */
+/*   Updated: 2021/11/26 15:05:25 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t size)
 	size_t	index_s1;
 	size_t	index;
 
+	if (!(*s2))
+		return ((char *)s1);
 	index_s1 = 0;
 	while (s1[index_s1] && index_s1 < size)
 	{

@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 21:46:14 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/17 21:59:33 by nakkim           ###   ########.fr       */
+/*   Updated: 2021/11/26 15:14:08 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_putnbr_fd(int n, int fd)
 	long long	tmp_n;
 	char		c;
 
+	if (fd < 0)
+		return ;
 	div = 1;
 	tmp_n = (long long)n;
 	if (tmp_n < 0)
