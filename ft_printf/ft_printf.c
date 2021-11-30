@@ -11,8 +11,9 @@ int	ft_printf(const char *s, ...)
 {
 	va_list	ap;
 	int		index;
-	char	current_c;
+	int		len;
 
+	len = 0;
 	index = -1;
 	va_start(ap, s);
 	while (s[++index])
@@ -20,51 +21,14 @@ int	ft_printf(const char *s, ...)
 		if (s[index] != '%')
 		{
 			write(1, &(s[index]), 1);
+			len++;
 			continue;
 		}
 		//if (!s[index + 1] || !is_seosick(s[index + 1]))
 			// Err!
-		// handle seosick
 		index++;
-		current_c = s[index];
-		if (current_c == '%')
-			write(1, "%", 1);
-		else if (current_c == 'c')
-		{
-			char	ch;
-			ch = va_arg(ap, int);
-			write(1, &ch, 1);
-		}
-		if (current_c == 's')
-		{
-			char	*ptr;
-			ptr = va_arg(ap, char *);
-			write(1, ptr, ft_strlen(ptr));
-		}
-		if (current_c == 'd' || current_c == 'i')
-		{
-			int		num;
-			char	*ptr;
-			num = va_arg(ap, int);
-			ptr = ft_itoa(num);
-			write(1, ptr, ft_strlen(ptr));
-		}
-		if (current_c == 'u')
-		{
-			unsigned int		num;
-			char	*ptr;
-			num = va_arg(ap, unsigned int);
-			ptr = ft_ltoa(num);
-			write(1, ptr, ft_strlen(ptr));
-		}
-		if (current_c == 'x' || current_c == 'X')
-		{
-			unsigned int		num;
-			char	*ptr;
-			num = va_arg(ap, unsigned int);
-			ptr = print_hex(num, current_c);
-			write(1, ptr, ft_strlen(ptr));
-		}
+		len += handle_seosick(ap, s[index]);
 	}
-	return (1);
+	va_end(ap);
+	return (len);
 }

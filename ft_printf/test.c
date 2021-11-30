@@ -12,8 +12,11 @@ int main(void)
 	printf("string: %s\n===\n", "1234");
 	ft_printf("string: %s", "1234");
 	puts("\n============================");
-	printf("num: %d %d %d\n===\n", 1234, -123, 0);
-	ft_printf("num: %d %d %d", 1234, -123, 0);
+	printf("num: %d %d %d\n===\n", 2147483647, -123, 0);
+	ft_printf("num: %d %d %d", 2147483647, -123, 0);
+	puts("\n============================");
+	printf("num(i): %i %i %i\n===\n", 2147483647, -123, 0);
+	ft_printf("num(i): %i %i %i", 2147483647, -123, 0);
 	puts("\n============================");
 	printf("num: %u %u %u\n===\n", 1234, -123, 0);
 	ft_printf("num: %u %u %u", 1234, -123, 0);
