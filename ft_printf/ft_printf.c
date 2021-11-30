@@ -1,7 +1,4 @@
 #include "ft_printf.h"
-#include "./libft/libft.h"
-
-#include <stdio.h>
 
 int	is_seosick(unsigned char c)
 {
@@ -42,6 +39,30 @@ int	ft_printf(const char *s, ...)
 		{
 			char	*ptr;
 			ptr = va_arg(ap, char *);
+			write(1, ptr, ft_strlen(ptr));
+		}
+		if (current_c == 'd' || current_c == 'i')
+		{
+			int		num;
+			char	*ptr;
+			num = va_arg(ap, int);
+			ptr = ft_itoa(num);
+			write(1, ptr, ft_strlen(ptr));
+		}
+		if (current_c == 'u')
+		{
+			unsigned int		num;
+			char	*ptr;
+			num = va_arg(ap, unsigned int);
+			ptr = ft_ltoa(num);
+			write(1, ptr, ft_strlen(ptr));
+		}
+		if (current_c == 'x' || current_c == 'X')
+		{
+			unsigned int		num;
+			char	*ptr;
+			num = va_arg(ap, unsigned int);
+			ptr = print_hex(num, current_c);
 			write(1, ptr, ft_strlen(ptr));
 		}
 	}

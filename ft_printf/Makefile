@@ -1,19 +1,17 @@
 NAME = libftprintf.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = ft_printf.c
+SRCS = ft_printf.c ft_printf_modules.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) ./libft/libft.a
-	ar rcsT $@ $^
+$(NAME): ./libft/libft.a $(OBJS)
+	ar x ./libft/libft.a
+	ar rc $@ *.o
 
 ./libft/libft.a:
 	make -C libft
-
-bonus: $(OBJS) $(BONUS_OBJS)
-	ar rc $(NAME) $^
 
 clean:
 	rm -f $(OBJS) $(BONUS_OBJS)
