@@ -18,8 +18,8 @@ int main(void)
 	printf("num(i): %i %i %i\n===\n", 2147483647, -123, 0);
 	ft_printf("num(i): %i %i %i", 2147483647, -123, 0);
 	puts("\n============================");
-	printf("num: %u %u %u\n===\n", 1234, -123, 0);
-	ft_printf("num: %u %u %u", 1234, -123, 0);
+	printf("num(u): %u %u %u\n===\n", 1234, -123, 0);
+	ft_printf("num(u): %u %u %u", 1234, -123, 0);
 	puts("\n============================");
 	printf("hex: %x\n===\n", 1234);
 	ft_printf("hex: %x", 1234);
