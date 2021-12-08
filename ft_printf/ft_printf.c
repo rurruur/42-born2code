@@ -25,9 +25,17 @@ int handle_p(va_list ap)
     int             	num;
 	int					ptr_size;
 
-	ptr_size = sizeof(void *);
+	ptr_size = sizeof(void *) * 2;
 	address = va_arg(ap, unsigned long long);
-	write(1, "0x1", 3);
+	write(1, "0x", 2);
+	while (ptr_size-- > 0)
+	{
+		if ((address >> (ptr_size * 4) & 15) != 0)
+		{
+			ptr_size++;
+			break;
+		}
+	}
 	while (ptr_size-- > 0)
 	{
 		num = (address >> (ptr_size * 4)) & 15;
