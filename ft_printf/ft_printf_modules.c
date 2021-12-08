@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int	get_len(unsigned int n)
+int	get_len(unsigned int n)
 {
     int len;
 
@@ -43,7 +43,7 @@ char    *ft_ltoa(unsigned int n)
 	return (dest);
 }
 
-static int  get_hex_len(unsigned int n)
+int  get_hex_len(unsigned int n)
 {
     int len;
 
@@ -88,6 +88,8 @@ int handle_seosick(va_list ap, char current_c)
 		return (handle_c(ap));
 	if (current_c == 's')
 		return (handle_s(ap));
+	if (current_c == 'p')
+		return (handle_p(ap));
 	if (current_c == 'd' || current_c == 'i')
 		return (handle_d_i(ap));
 	if (current_c == 'u')

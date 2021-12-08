@@ -3,6 +3,9 @@
 
 int main(void)
 {
+	void	*a;
+
+	a = "1234";
 	printf("%%%%\n===\n");
 	ft_printf("%%%%");
 	ft_printf("\n============================\n");
@@ -26,4 +29,7 @@ int main(void)
 	puts("\n============================");
 	printf("hex: %X\n===\n", 1234);
 	ft_printf("hex: %X", 1234);
+	puts("\n============================");
+	printf("hex: %p\n===\n", a);
+	ft_printf("hex: %p", a);
 }

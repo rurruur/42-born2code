@@ -19,6 +19,27 @@ int	is_seosick(unsigned char c)
 	return (0);
 }
 
+int handle_p(va_list ap)
+{
+	unsigned long long	address;
+    int             	num;
+	int					ptr_size;
+
+	ptr_size = sizeof(void *);
+	address = va_arg(ap, unsigned long long);
+	write(1, "0x1", 3);
+	while (ptr_size-- > 0)
+	{
+		num = (address >> (ptr_size * 4)) & 15;
+		if (num > 9)
+			num += 'a' - 10;
+		else
+			num += '0';
+		write(1, &num, 1);
+	}
+    return (sizeof(void *));
+}
+
 int	ft_printf(const char *s, ...)
 {
 	va_list	ap;
