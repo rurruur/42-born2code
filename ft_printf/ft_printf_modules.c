@@ -12,15 +12,15 @@
 
 #include "ft_printf.h"
 
-int	get_len(unsigned int n)
+int	get_len(unsigned int n, int notation)
 {
     int len;
 
 	len = 1;
-	while (n / 10 > 0)
+	while (n / notation > 0)
 	{
 		len++;
-        n /= 10;
+        n /= notation;
 	}
     return (len);
 }
@@ -30,7 +30,7 @@ char    *ft_ltoa(unsigned int n)
     char		    *dest;
 	int			    len;
 
-    len = get_len(n);
+    len = get_len(n, 10);
     dest = (char *)malloc(sizeof(char) * (len + 1));
     if (!dest)
         return (0);
@@ -43,26 +43,13 @@ char    *ft_ltoa(unsigned int n)
 	return (dest);
 }
 
-int  get_hex_len(unsigned int n)
-{
-    int len;
-
-    len = 1;
-    while (n / 16 > 0)
-    {
-        len++;
-        n /= 16;
-    }
-    return (len);
-}
-
 char    *print_hex(unsigned int n, char c)
 {
     char            asdf;
     char		    *dest;
 	int			    len;
 
-    len = get_hex_len(n);
+    len = get_len(n, 16);
     dest = (char *)malloc(sizeof(char) * (len + 1));
     if (!dest)
         return (0);

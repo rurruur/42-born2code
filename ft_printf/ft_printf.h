@@ -28,7 +28,6 @@ int     handle_d_i(va_list ap);
 int     handle_s(va_list ap);
 int     handle_u(va_list ap);
 int     handle_x_X(va_list ap, char ch);
-int     get_len(unsigned int n);
-int     get_hex_len(unsigned int n); // get_len으로 합치기
+int     get_len(unsigned int n, int notation);
 
 #endif
