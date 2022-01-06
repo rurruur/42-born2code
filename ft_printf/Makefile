@@ -7,8 +7,8 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): ./libft/libft.a $(OBJS)
-	ar x ./libft/libft.a
-	ar rc $@ *.o
+	cp ./libft/libft.a $(NAME)
+	ar rc $@ $(OBJS)
 
 ./libft/libft.a:
 	make -C libft
