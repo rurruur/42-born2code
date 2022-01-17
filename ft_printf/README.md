@@ -50,3 +50,18 @@ void va_copy(va_list dest, va_list src);
 > ##### va_end
     - ap 포인터를 NULL로 설정
     - 함수가 반환되기 전에 va_start 또는 va_copy로 초기화된 각 인수 목록에 대해 va_end를 호출해야 함
+
+### 구현
+~~~
+int ft_printf(const char *, ...);
+~~~
+실제 printf처럼 버퍼 관리를 수행해서는 안 됨
+
+다음 서식 지정자를 구현: cspdiuxX%
+#### 서식 지정자
+> ##### %c
+    단일 문자(character) 출력
+> ##### %s
+문자열 출력
+> ##### %p
+    void * 형식의 포인터 인자를 16진수로 출력
