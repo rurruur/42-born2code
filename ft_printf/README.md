@@ -16,7 +16,7 @@ Makefile 규칙: all, clean, fclean, re, bonus
 ~~~
 #include <stdarg.h>
 
-void va_start(va_list ap, last);
+void va_start(va_list ap, prev_param);
 type va_arg(va_list ap, type);
 void va_end(va_list ap);
 void va_copy(va_list dest, va_list src);
@@ -35,3 +35,18 @@ void va_copy(va_list dest, va_list src);
 > ##### va_start
     - 함수로 전달되는 인수 목록의 첫 번째 선택적 인수로 ap를 설정
     - ap 인수의 형식은 va_list
+    - prev_param: 인수 목록에서 첫 번째 선택적 인수 바로 앞에 오는 필수 매개 변수의 이름
+    - va_arg를 처음으로 사용하기 전에 va_start를 사용해야 함
+    - prev_param이 register 스토리지 클래스로 선언된 경우 매크로의 동작은 정의되지 않음
+> ##### va_arg
+    - ap가 제공하는 위치에서 type의 값을 검색
+    - type의 크기를 사용하여 목록의 다음 인수를 가르키도록 ap를 증가시켜 다음 인수가 시작되는 위치를 결정
+    - 함수에서 va_arg를 원하는 횟수만큼 사용하여 목록에서 인수 검색 가능
+    - int보다 작은 값(예: char, bool, short)을 가변 개수의 인수를 사용하는 함수에 전달하면 int로 변환됨
+> ##### va_copy
+    - 인수 목록의 현재 상태로 복사본을 생성
+    - src 매개 변수는 va_start로 초기화된 상태여야 하며, va_arg 호출에서 업데이트 되었을 수도 있음
+    - va_arg가 dest에서 검색하는 다음 인수는 src에서 검색되는 다음 인수와 동일
+> ##### va_end
+    - ap 포인터를 NULL로 설정
+    - 함수가 반환되기 전에 va_start 또는 va_copy로 초기화된 각 인수 목록에 대해 va_end를 호출해야 함
