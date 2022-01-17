@@ -33,11 +33,11 @@ void va_copy(va_list dest, va_list src);
 
 #### STDARG.H에 정의된 C 표준 매크로
 > ##### va_start
-    - 함수로 전달되는 인수 목록의 첫 번째 선택적 인수로 ap를 설정
-    - ap 인수의 형식은 va_list
-    - prev_param: 인수 목록에서 첫 번째 선택적 인수 바로 앞에 오는 필수 매개 변수의 이름
-    - va_arg를 처음으로 사용하기 전에 va_start를 사용해야 함
-    - prev_param이 register 스토리지 클래스로 선언된 경우 매크로의 동작은 정의되지 않음
+>   - 함수로 전달되는 인수 목록의 첫 번째 선택적 인수로 ap를 설정
+>   - ap 인수의 형식은 va_list
+>   - prev_param: 인수 목록에서 첫 번째 선택적 인수 바로 앞에 오는 필수 매개 변수의 이름
+>   - va_arg를 처음으로 사용하기 전에 va_start를 사용해야 함
+>   - prev_param이 register 스토리지 클래스로 선언된 경우 매크로의 동작은 정의되지 않음
 > ##### va_arg
     - ap가 제공하는 위치에서 type의 값을 검색
     - type의 크기를 사용하여 목록의 다음 인수를 가르키도록 ap를 증가시켜 다음 인수가 시작되는 위치를 결정
@@ -62,6 +62,6 @@ int ft_printf(const char *, ...);
 > ##### %c
     단일 문자(character) 출력
 > ##### %s
-문자열 출력
+- 문자열 출력
 > ##### %p
     void * 형식의 포인터 인자를 16진수로 출력
