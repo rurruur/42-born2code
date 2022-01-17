@@ -33,5 +33,5 @@ void va_copy(va_list dest, va_list src);
 
 #### STDARG.H에 정의된 C 표준 매크로
 > ###### va_start
-    - 함수로 전달되는 인수 목록의 첫 번째 선택적 인수로 ap를 설정
-    - ap 인수의 형식은 va_list
+- 함수로 전달되는 인수 목록의 첫 번째 선택적 인수로 ap를 설정
+- ap 인수의 형식은 va_list
