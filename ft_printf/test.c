@@ -34,6 +34,7 @@ int main(void)
 	puts("\n============================");
 	printf("hex: %p\n===\n", a);
 	ft_printf("hex: %p", a);
+	puts("\n============================");
 	printf("hex: %p\n===\n", NULL);
 	ft_printf("hex: %p", NULL);
 }
