@@ -59,8 +59,7 @@ int ft_printf(const char *, ...);
 
 다음 서식 지정자를 구현: cspdiuxX%
 #### 서식 지정자
-> ##### %c
->   - 단일 문자(character) 출력
+> ##### %c - 단일 문자(character) 출력
 
 > ##### %s
 >   - 문자열 출력
