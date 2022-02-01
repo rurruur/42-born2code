@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:32:07 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 16:02:36 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/01 16:51:24 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ void		push(t_node **head, t_node **dest_head);
 void		add_top(t_node **head, t_node *node);
 void		rotate(t_node **head);
 void		reverse_rotate(t_node **head);
+void		sort_list(t_node **a_head, t_node **b_head);
+int			is_sorted(t_node *head);
 
 #endif

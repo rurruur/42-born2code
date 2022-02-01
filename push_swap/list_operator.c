@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:15:42 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 16:02:42 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/01 17:09:19 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,14 @@ void	push(t_node **head, t_node **dest_head)
 	if (!(*head))
 		return ;
 	target = *head;
-	(*head)->prev_node->next_node = (*head)->next_node;
-	(*head)->next_node->prev_node = (*head)->prev_node;
-	*head = (*head)->next_node;
+	if (*head == (*head)->next_node)
+		*head = 0;
+	else
+	{
+		(*head)->prev_node->next_node = (*head)->next_node;
+		(*head)->next_node->prev_node = (*head)->prev_node;
+		*head = (*head)->next_node;
+	}
 	add_top(dest_head, target);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:32:22 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 16:01:16 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/01 17:01:06 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,17 @@ int	main(int argc, char *argv[])
 	if (argc == 1)
 		print_error();
 	set_stack(&a_head, argc, argv);
+	puts("--a--");
 	print_list(a_head);
+	puts("--b--");
 	print_list(b_head);
-	reverse_rotate(&a_head);
-	rotate(&b_head);
+
+	//sort_list(&a_head, &b_head);
+	push(&a_head, &b_head);
+	push(&a_head, &b_head);
+	puts("--a--");
 	print_list(a_head);
+	puts("--b--");
 	print_list(b_head);
 	destroy_list(a_head);
 	return (0);
