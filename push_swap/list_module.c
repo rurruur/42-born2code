@@ -6,81 +6,75 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:31:26 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 15:00:36 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/01 15:39:44 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	destroy_list(Node *head)
+void	destroy_list(t_node *head)
 {
-	Node	*curr;
-	Node	*remove;
+	t_node	*curr;
+	t_node	*remove;
 
 	if (head)
 	{
-		curr = head->nextNode;
+		curr = head->next_node;
 		free(head);
 		while (curr != head)
 		{
 			remove = curr;
-			curr = curr->nextNode;
+			curr = curr->next_node;
 			free(remove);
 		}
 	}
 }
 
 // test
-void	print_list(Node *head)
+void	print_list(t_node *head)
 {
-	Node	*curr;
+	t_node	*curr;
 
 	curr = head;
-	printf("head %p\ttail %p\n", head, head->prevNode);
+	printf("head %p\ttail %p\n", head, head->prev_node);
 	if (head)
 	{
-		printf("[%p] %d [%p]\n", head, head->data, head->nextNode);
-		curr = head->nextNode;
+		printf("[%p] %d [%p]\n", head, head->data, head->next_node);
+		curr = head->next_node;
 		while (curr != head)
 		{
-			printf("[%p] %d [%p]\n", curr, curr->data, curr->nextNode);
-			curr = curr->nextNode;
+			printf("[%p] %d [%p]\n", curr, curr->data, curr->next_node);
+			curr = curr->next_node;
 		}
 	}
 }
 
-Node	*create_node(int num)
+t_node	*create_node(int num)
 {
-	Node	*node;
+	t_node	*node;
 
-	node = (Node *)malloc(sizeof(Node));
+	node = (t_node *)malloc(sizeof(t_node));
 	// 널가드?
 	node->data = num;
-	node->prevNode = 0;
-	node->nextNode = 0;
+	node->prev_node = 0;
+	node->next_node = 0;
 	return (node);
 }
 
-void	append_node(Node **head, Node *node)
+void	append_node(t_node **head, t_node *node)
 {
-	Node	*tail;
+	t_node	*tail;
 
 	if (!(*head))
 	{
 		*head = node;
+		(*head)->prev_node = node;
+		(*head)->next_node = node;
 		return ;
 	}
-	tail = (*head)->prevNode;
-	node->nextNode = *head;
-	(*head)->prevNode = node;
-	if (tail)
-	{
-		node->prevNode = tail;
-		tail->nextNode = node;
-	}
-	else
-	{
-		(*head)->nextNode = node;
-		node->prevNode = *head;
-	}
+	tail = (*head)->prev_node;
+	node->next_node = *head;
+	(*head)->prev_node = node;
+	node->prev_node = tail;
+	tail->next_node = node;
 }
