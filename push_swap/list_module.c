@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:31:26 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 14:35:02 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/01 15:00:36 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	destroy_list(Node *head)
 	}
 }
 
+// test
 void	print_list(Node *head)
 {
 	Node	*curr;
