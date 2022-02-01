@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:32:22 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 15:08:17 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/01 16:01:16 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ long long	ft_atol(char *ptr)
 	return (num * sign);
 }
 
-void	set_stack(Node **head, int argc, char **argv)
+void	set_stack(t_node **head, int argc, char **argv)
 {
-	int	index;
-	int	value_index;
+	int			index;
+	int			value_index;
 	long long	num;
 
 	index = 0;
@@ -46,7 +46,8 @@ void	set_stack(Node **head, int argc, char **argv)
 		value_index = -1;
 		while (argv[index][++value_index])
 		{
-			if (argv[index][value_index] == '-' || argv[index][value_index] == '+')
+			if (argv[index][value_index] == '-'
+				|| argv[index][value_index] == '+')
 				continue ;
 			// 매개변수를 숫자인지 확인
 			if (!ft_isdigit(argv[index][value_index]))
@@ -60,7 +61,7 @@ void	set_stack(Node **head, int argc, char **argv)
 	}
 }
 
-void	print_error()
+void	print_error(void)
 {
 	write(1, "Error\n", 6);
 	exit(1);
@@ -68,16 +69,20 @@ void	print_error()
 
 int	main(int argc, char *argv[])
 {
-	Node	*a_head;
-	//Node	*b_head;
+	t_node	*a_head;
+	t_node	*b_head;
 
 	a_head = 0;
+	b_head = 0;
 	if (argc == 1)
 		print_error();
 	set_stack(&a_head, argc, argv);
-	
 	print_list(a_head);
+	print_list(b_head);
+	reverse_rotate(&a_head);
+	rotate(&b_head);
+	print_list(a_head);
+	print_list(b_head);
 	destroy_list(a_head);
-
 	return (0);
 }

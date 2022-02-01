@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:31:26 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 15:39:44 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/01 15:57:53 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	print_list(t_node *head)
 	t_node	*curr;
 
 	curr = head;
-	printf("head %p\ttail %p\n", head, head->prev_node);
 	if (head)
 	{
+		printf("head %p\ttail %p\n", head, head->prev_node);
 		printf("[%p] %d [%p]\n", head, head->data, head->next_node);
 		curr = head->next_node;
 		while (curr != head)
@@ -77,4 +77,21 @@ void	append_node(t_node **head, t_node *node)
 	(*head)->prev_node = node;
 	node->prev_node = tail;
 	tail->next_node = node;
+}
+
+void	add_top(t_node **head, t_node *node)
+{
+	t_node	*tail;
+
+	if (!(*head))
+	{
+		append_node(head, node);
+		return ;
+	}
+	tail = (*head)->prev_node;
+	tail->next_node = node;
+	(*head)->prev_node = node;
+	node->prev_node = tail;
+	node->next_node = *head;
+	*head = node;
 }

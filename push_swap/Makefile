@@ -1,7 +1,7 @@
 NAME = push_swap
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = push_swap.c list_module.c
+SRCS = push_swap.c list_module.c list_operator.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
