@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:32:22 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 17:01:06 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/01 17:15:11 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,20 @@ int	main(int argc, char *argv[])
 	set_stack(&a_head, argc, argv);
 	puts("--a--");
 	print_list(a_head);
+	printf("is sorted - %d\n", is_sorted(a_head));
 	puts("--b--");
 	print_list(b_head);
+	printf("is sorted - %d\n", is_sorted(b_head));
 
 	//sort_list(&a_head, &b_head);
 	push(&a_head, &b_head);
-	push(&a_head, &b_head);
 	puts("--a--");
 	print_list(a_head);
+	printf("is sorted - %d\n", is_sorted(a_head));
 	puts("--b--");
 	print_list(b_head);
+	printf("is sorted - %d\n", is_sorted(b_head));
 	destroy_list(a_head);
+	destroy_list(b_head);
 	return (0);
 }

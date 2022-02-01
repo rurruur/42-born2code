@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 16:43:37 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 17:10:35 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/01 17:14:56 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_sorted(t_node *head)
 		|| head->next_node->data < head->data)
 		return (0);
 	curr = head->next_node;
-	while (curr != head)
+	while (curr->next_node != head)
 	{
 		if (curr->prev_node->data < curr->data
 			|| curr->next_node->data < curr->data)
