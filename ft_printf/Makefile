@@ -14,9 +14,9 @@ $(NAME): ./libft/libft.a $(OBJS)
 	make -C libft
 
 clean:
-	rm -f $(OBJS) $(BONUS_OBJS)
+	rm -f $(OBJS) ./libft/*.o
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) ./libft/libft.a
 
 re: fclean all

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 18:36:04 by nakkim            #+#    #+#             */
-/*   Updated: 2021/12/01 18:36:05 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/07 13:03:23 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int	ft_printf(const char *s, ...)
 			len++;
 			continue ;
 		}
-		//if (!s[index + 1] || !is_seosick(s[index + 1]))
-			// Err!
 		index++;
+		if (!s[index] || !is_seosick(s[index]))
+			return (-1);
 		len += handle_seosick(ap, s[index]);
 	}
 	va_end(ap);
