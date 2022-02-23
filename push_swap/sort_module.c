@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 16:43:37 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 17:14:56 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/02/07 14:24:49 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	is_sorted(t_node *head)
 
 void	sort_list(t_node **a_head, t_node **b_head)
 {
-	while (!is_sorted(*a_head) || !(*b_head))
+	while (!is_sorted(*a_head) || *b_head)
 	{
 	}
 }
