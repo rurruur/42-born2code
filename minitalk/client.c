@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 21:20:34 by nakkim            #+#    #+#             */
-/*   Updated: 2022/03/29 17:27:48 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/03/30 13:31:47 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	send_char(int pid, char ch)
 		if (result == -1)
 			exit(1);
 		ch /= 2;
-		usleep(100);
+		usleep(50);
 	}
 }
 
