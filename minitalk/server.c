@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 21:20:22 by nakkim            #+#    #+#             */
-/*   Updated: 2022/03/29 17:30:34 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/03/30 13:23:25 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ int main(void)
 	int		result;
 
 	act.sa_handler = signal_handler;
-	// sa_mask: 시그널 처리하는 동안 블록시킬 시그널 집합인데 비워뒀으므로 모든 시그널 블록되지 않음
 	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0; // sa_flag?
+	act.sa_flags = 0;
 	result = sigaction(SIGUSR1, &act, NULL);
 	result += sigaction(SIGUSR2, &act, NULL);
 	if (result != 0)
