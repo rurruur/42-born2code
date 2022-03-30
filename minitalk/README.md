@@ -44,7 +44,7 @@
         struct sigaction {
             union __sigaction_u __sigaction_u;  // signal handler
             sigset_t sa_mask;  // signal mask to apply
-            int sa_flags;  // see signal options below
+            int sa_flags;  // sa_flags specifies a set of flags which modify the behavior of the signal.
         };
 
         union __sigaction_u {
@@ -69,7 +69,7 @@
 
 	        act.sa_handler = signal_handler;
 	        sigemptyset(&act.sa_mask);  // sa_mask: 비워뒀으므로 모든 시그널 블록되지 않음
-	        act.sa_flags = 0;  // sa_flag?
+	        act.sa_flags = 0;
 	        sigaction(SIGUSR1, &act, NULL);
 	        sigaction(SIGUSR2, &act, NULL);
         }
