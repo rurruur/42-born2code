@@ -7,17 +7,95 @@
 - 필수파트를 위해서 다음의 함수만을 사용하실 수 있습니다. :
     - `write`
     - `signal`
+        ```
+        #include <signal.h>
+        
+        void (*signal(int sig, void (*func)(int)))(int);
+        // or
+        typedef void (*sig_t) (int);
+        sig_t signal(int sig, sig_t func);
+        ```
+        - sig: 받은 시그널
+        - func: 시그널 받았을 때 수행할 동작
+        - 에러 발생 시 SIG_ERR가 리턴됨 + errno가 전역 변수로 설정
+        - 한번 사용하고 나면 signal action을 디폴트값으로 리셋함
     - `sigemptyset`
+        ```
+        #include <signal.h>
+
+        int sigemptyset(sigset_t *set);
+        ```
+        - initializes a signal set to be empty
+        - signal set 생성, sigset_t에 저장
+        - sigemptyset() or sigfillset()은 sigset_t 사용 전 호출 필요
+        - 에러 없음, 리턴값 0
     - `sigaddset`
+        ```
+        #include <signal.h>
+
+        int sigaddset(sigset_t *set, int signo);
+        ```
+        - adds the specified signal signo to the signal set
+        - 에러 없음 리턴값 0
     - `sigaction`
+        ```
+        #include <signal.h>
+
+        struct sigaction {
+            union __sigaction_u __sigaction_u;  // signal handler
+            sigset_t sa_mask;  // signal mask to apply
+            int sa_flags;  // see signal options below
+        };
+
+        union __sigaction_u {
+            void (*__sa_handler)(int);
+            void (*__sa_sigaction)(int, siginfo_t *, void *);
+        };
+
+        #define sa_handler __sigaction_u.__sa_handler
+        #define sa_sigaction __sigaction_u.__sa_sigaction
+
+        int sigaction(int sig, const struct sigaction *restrict act,
+            struct sigaction *restrict oact);
+        ```
+        - 글로벌 시그널 마스크는 현재 프로세스로의 전달이 막힌 시그널들의 집합 정의
+        - 프로세스의 시그널 마스크는 그의 부모로부터 초기화됨(보통 비어있음)
+        - sigaction() 호출은 sig가 가리키는 시그널에 액션을 할당
+        - 리턴: 성공=0, 아니면 -1(with global variable errno)
+        ```
+        int main()
+        {
+            struct sigaction act;
+
+	        act.sa_handler = signal_handler;
+	        sigemptyset(&act.sa_mask);  // sa_mask: 비워뒀으므로 모든 시그널 블록되지 않음
+	        act.sa_flags = 0;  // sa_flag?
+	        sigaction(SIGUSR1, &act, NULL);
+	        sigaction(SIGUSR2, &act, NULL);
+        }
+        ```
     - `kill`
+        ```
+        #include <signal.h>
+
+        int kill(pid_t pid, int sig);
+        ```
+        - sends a signal to the processes specified by the pid operands.
     - `getpid`
     - `malloc`
     - `free`
     - `pause`
+        - calling thread to pause until a signal is received
     - `sleep`
+        - seconds
     - `usleep`
+        - microseconds
     - `exit`
+
+### signal() vs sigaction()
+- signal()은 한번 호출 후 signal action을 디폴트(SIG_DFL)로 리셋
+- sigaction()은 sa_flag를 이용한 다양한 기능의 지원
+- more:  <a href="https://stackoverflow.com/questions/231912/what-is-the-difference-between-sigaction-and-signal">difference between sigaction and signal(stackoverflow)</a>
 
 ## Mandatory part
 - 클라이언트와 서버가 서로 통신하는 프로그램
