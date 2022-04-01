@@ -6,15 +6,13 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 21:20:22 by nakkim            #+#    #+#             */
-/*   Updated: 2022/04/01 15:46:25 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/04/01 15:52:30 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
 #include "./libft/libft.h"
-
-#include <stdio.h>
 
 void printPID(int pid) {
 	char *str;
