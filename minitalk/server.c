@@ -6,13 +6,15 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 21:20:22 by nakkim            #+#    #+#             */
-/*   Updated: 2022/03/30 13:23:25 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/04/01 15:46:25 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
 #include "./libft/libft.h"
+
+#include <stdio.h>
 
 void printPID(int pid) {
 	char *str;
@@ -26,10 +28,11 @@ void printPID(int pid) {
 	free(str);
 }
 
-void signal_handler(int sig) {
+void signal_handler(int sig, siginfo_t *info, void *uap) {
 	static int	count;
 	static char	ch;
 
+	(void)uap;
 	if (--count < 1)
 	{
 		count = 7;
@@ -39,7 +42,10 @@ void signal_handler(int sig) {
 	if (count == 1)
 	{
 		if (ch == 127)
+		{
 			write(1, "\n", 1);
+			kill(info->si_pid, SIGUSR1);
+		}
 		else
 			write(1, &ch, 1);
 	}
@@ -50,9 +56,9 @@ int main(void)
 	struct sigaction act;
 	int		result;
 
-	act.sa_handler = signal_handler;
+	act.sa_sigaction = signal_handler;
 	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0;
+	act.sa_flags = SA_SIGINFO;
 	result = sigaction(SIGUSR1, &act, NULL);
 	result += sigaction(SIGUSR2, &act, NULL);
 	if (result != 0)
