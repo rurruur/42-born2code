@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 21:20:22 by nakkim            #+#    #+#             */
-/*   Updated: 2022/04/01 15:52:30 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/04/02 16:01:27 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include <signal.h>
 #include "./libft/libft.h"
 
-void printPID(int pid) {
-	char *str;
+void	printPID(int pid)
+{
+	char	*str;
 
 	str = ft_itoa(pid);
 	if (!str)
@@ -26,20 +27,21 @@ void printPID(int pid) {
 	free(str);
 }
 
-void signal_handler(int sig, siginfo_t *info, void *uap) {
-	static int	count;
-	static char	ch;
+void	signal_handler(int sig, siginfo_t *info, void *uap)
+{
+	static int				count;
+	static unsigned char	ch;
 
 	(void)uap;
 	if (--count < 1)
 	{
-		count = 7;
+		count = 8;
 		ch = 0;
 	}
-	ch |= ((sig % 2)<<(7-count));
+	ch |= ((sig % 2) << (8 - count));
 	if (count == 1)
 	{
-		if (ch == 127)
+		if (ch == 0)
 		{
 			write(1, "\n", 1);
 			kill(info->si_pid, SIGUSR1);
@@ -49,10 +51,10 @@ void signal_handler(int sig, siginfo_t *info, void *uap) {
 	}
 }
 
-int main(void)
+int	main(void)
 {
-	struct sigaction act;
-	int		result;
+	struct sigaction	act;
+	int					result;
 
 	act.sa_sigaction = signal_handler;
 	sigemptyset(&act.sa_mask);
@@ -62,10 +64,7 @@ int main(void)
 	if (result != 0)
 		exit(1);
 	printPID(getpid());
-
-	while (1) {
+	while (1)
 		pause();
-	}
-
 	return (0);
 }
