@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 21:20:22 by nakkim            #+#    #+#             */
-/*   Updated: 2022/04/02 16:01:27 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/04/04 13:55:16 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <signal.h>
 #include "./libft/libft.h"
 
-void	printPID(int pid)
+void	print_pid(int pid)
 {
 	char	*str;
 
@@ -63,7 +63,7 @@ int	main(void)
 	result += sigaction(SIGUSR2, &act, NULL);
 	if (result != 0)
 		exit(1);
-	printPID(getpid());
+	print_pid(getpid());
 	while (1)
 		pause();
 	return (0);

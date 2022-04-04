@@ -3,15 +3,14 @@ CFLAGS = -Wall -Werror -Wextra
 LFLAGS = -L./libft -lft
 SERVER = server
 CLIENT = client
-SERVER_SRCS = server.c
 
 all: $(SERVER) $(CLIENT)
 
 $(SERVER): server.c ./libft/libft.a
-	$(CC) $(CFLAGS) $^ -o $@ $(LFLAGS)
+	$(CC) $(CFLAGS) server.c -o $@ $(LFLAGS)
 
 $(CLIENT): client.c ./libft/libft.a
-	$(CC) $(CFLAGS) $^ -o $@ $(LFLAGS)
+	$(CC) $(CFLAGS) client.c -o $@ $(LFLAGS)
 
 ./libft/libft.a:
 	make -C libft
@@ -23,3 +22,5 @@ fclean: clean
 	rm -f $(SERVER) $(CLIENT) ./libft/libft.a
 
 re: fclean all
+
+.PHONY: all clean fclean re $(SERVER) $(CLIENT)
