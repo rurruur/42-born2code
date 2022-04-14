@@ -28,6 +28,27 @@ the same rules for your libft as those written above.
 - exit
 - All the functions defined in the math library (-lm and man 3 math)
 - All the functions defined in the miniLibX library.
+	```
+	#include "mlx.h"
+
+	int mlx_loop(void* mlx_ptr);
+	```
+	- To receive events, must use this function.
+	- This function never returns.
+	- connection identifier로 포인터를 받음
+	- 무한 루프를 돌며 이벤트를 기다리고, 이벤트가 발생하면 사용자 정의 함수를 호출한다.
+
+	```
+	#include "mlx.h"
+
+	int mlx_key_hook(void* win_ptr, int (*func_ptr)(), void* param);
+	```
+	- `func_ptr`:  이벤트 발생 시 호출할 함수
+		- keycode(int)와 param(void*)이 매개변수로 전달됨
+		- keycode: 키보드 클릭 시 어떤 키가 눌렸는지
+	- `param`: 함수가 호출될 때마다 함수로 전달됨
+		- 필요 시 값 저장해서 다른 함수에서 사용 가능
+
 
 • You are allowed to use other functions to complete the bonus part as long as their
 use is justified during your evaluation. Be smart!
