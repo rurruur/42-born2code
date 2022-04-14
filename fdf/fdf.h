@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 23:40:19 by nakkim            #+#    #+#             */
-/*   Updated: 2022/04/12 00:23:37 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/04/14 15:28:31 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@
 # define SIZE_X 500
 # define SIZE_Y 300
 # define TITLE "hi"
+# define ESC 53
 
 #endif
