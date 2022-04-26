@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 23:40:17 by nakkim            #+#    #+#             */
-/*   Updated: 2022/04/20 15:26:55 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/04/26 23:48:24 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,67 +31,138 @@ void	iso(t_coor* c)
 	c->y = (prev_x - prev_y) * sin(0.523599) - c->z;
 }
 
-void	draw_point(void *mlx_ptr, void *win_ptr, t_coor* c)
+void draw_map(void *mlx_ptr, void *win_ptr, t_map map)
 {
-	
+	int		x;
+	int		y;
+	int		row_index;
+	int		col_index;
+
+
+	col_index = 0;
+	y = 100;
+	while (col_index++ < map.col_size)
+	{
+		x = 130;
+		row_index = 0;
+		while (++row_index < map.row_size)
+		{
+			bresenham((x - 30), y, x, y, mlx_ptr, win_ptr);
+			x += 30;
+		}
+		y += 30;
+	}
+	row_index = 0;
+	x = 100;
+	while (row_index++ < map.row_size)
+	{
+		col_index = 0;
+		y = 130;
+		while (++col_index < map.col_size)
+		{
+			bresenham(x, (y - 30), x, y, mlx_ptr, win_ptr);
+			y += 30;
+		}
+		x += 30;
+	}
 }
 
-void draw_map(void *mlx_ptr, void *win_ptr, char *map_file)
+void	createMap(char* map_file, t_map *map)
 {
 	int		fd;
-	int		i;
 	char	*result;
-	t_coor	coordinate;
+	int		row_max;
+	int		row;
+	int		col;
+	int		index;
 
 	fd = open(map_file, O_RDONLY);
-	coordinate.y = 100;
 	if (fd == -1)
 		exit(1);
-	
+	row_max = 0;
+	col = 0;
 	result = get_next_line(fd);
 	while (result)
 	{
-		coordinate.y += 20;
-		i = 0;
-		coordinate.x = 100;
-		printf("%s", result);
-		while (result[i] && result[i] != '\n')
+		index = 0;
+		row = 0;
+		while (result[index])
 		{
-			coordinate.x += 20;
-			coordinate.z = result[i];
-			iso(&coordinate);
-			draw_point(mlx_ptr, win_ptr, &coordinate);
-			i++;
+			while ((result[index] >= '0' && result[index] <= '9') || result[index] == '-')
+				index++;
+			row++;
+			while (result[index] == ' ' || result[index] == '\n')
+				index++;
 		}
+		if (row_max < row)
+			row_max = row;
+		col++;
 		free(result);
 		result = get_next_line(fd);
 	}
-	
 	close(fd);
+	map->col_size = col;
+	map->row_size = row_max;
+	printf("row: %d, col:%d\n", row_max, col);
+	map->info = (int**)malloc(sizeof(int*) * col);
+	if (map->info == NULL)
+		exit(1);
+	index = 0;
+	while (index < col)
+		map->info[index++] = (int*)malloc(sizeof(int) * row_max);
 }
 
-// 픽셀 크기 지정
-void Bresenham(t_bre* bre, int x1, int y1, void* mlx_ptr, void* win_ptr)
+void	getMapInfo(char *map_file, t_map *map)
 {
-	bre->dx = x1 - bre->x;
-	bre->dy = y1 - bre->y;
-	bre->distance = 2 * bre->dy - bre->dx;
-	while (bre->x <= x1)
+	int		fd;
+	char	*result;
+	int		row;
+	int		col;
+	int		index;
+	int		flag;
+	int		num;
+
+	fd = open(map_file, O_RDONLY);
+	if (fd == -1)
+		exit(1);
+	col = 0;
+	result = get_next_line(fd);
+	while (result)
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, bre->x, bre->y, 0x00FFFFFF);
-		(bre->x)++;
-		if (bre->distance < 0)
-			bre->distance = bre->distance + 2 * bre->dy;
-		else
+		index = 0;
+		row = 0;
+		flag = 1;
+		while (result[index])
 		{
-			bre->distance = bre->distance + 2 * bre->dy - bre->dx;
-			(bre->y)++;
+			flag = 1;
+			num = 0;
+			if (result[index] == '-')
+			{
+				flag = -flag;
+				index++;
+			}
+			while ((result[index] >= '0' && result[index] <= '9'))
+			{
+				num = num * 10 + result[index] - '0';
+				index++;
+			}
+			map->info[col][row] = num * flag;
+			row++;
+			while (result[index] == ' ' || result[index] == '\n')
+				index++;
 		}
+		if (row < map->row_size)
+			map->info[col][row++] = -2147483647;
+		col++;
+		free(result);
+		result = get_next_line(fd);
 	}
+	close(fd);
 }
 
 int	main(int argc, char **argv)
 {
+	t_map	map;
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	*param;
@@ -99,6 +170,18 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (0);
+	// julia 같은 맵..안됨ㅡㅡ
+	createMap(argv[1], &map);
+	getMapInfo(argv[1], &map);
+
+	// for (int i = 0; i < map.col_size; i++)
+	// {
+	// 	for (int j = 0; j < map.row_size; j++)
+	// 	{
+	// 		printf("%d ", map.info[i][j]);
+	// 	}
+	// 	puts("");
+	// }
 	param = NULL;
 	mlx_ptr = mlx_init();
 	win_ptr = mlx_new_window(mlx_ptr, SIZE_X, SIZE_Y, TITLE);
@@ -107,13 +190,22 @@ int	main(int argc, char **argv)
 
 	bre.x = 10;
 	bre.y = 10;
-	Bresenham(&bre, 20, 20, mlx_ptr, win_ptr);
+	// Bresenham(&bre, 20, 20, mlx_ptr, win_ptr);
 
-	//draw_map(mlx_ptr, win_ptr, argv[1]);
+	draw_map(mlx_ptr, win_ptr, map);
+
+	// 이미지를 조작해보자..
+	// void	*img_ptr = mlx_new_image(mlx_ptr, 200, 300);
+	// int	bits_per_pixel = 16;
+	// int	size_line = 200;
+	// mlx_get_data_addr(img_ptr, &bits_per_pixel, &size_line, NULL);
+	// mlx_put_image_to_window(mlx_ptr, win_ptr, img_ptr, 10, 20);
+	// 그만해보자...
 
 	mlx_loop(mlx_ptr);
 	// mlx_loop_hook(mlx_ptr, key_hook, param);
 	// mlx_clear_window(mlx_ptr, win_ptr);
 	// mlx_destroy_window(mlx_ptr, win_ptr);
+	free(map.info);
 	return (0);
 }
