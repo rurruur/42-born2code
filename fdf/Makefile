@@ -2,13 +2,19 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 LFLAGS = -L. -lmlx
 NAME = fdf
+OBJS = fdf.o bresenham.o
 GNL_SRCS = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 GNL_OBJS = $(GNL_SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): fdf.c libmlx.dylib $(GNL_SRCS)
-	$(CC) fdf.c $(GNL_SRCS) -o $@ $(LFLAGS)
+$(NAME): $(OBJS) libmlx.dylib $(GNL_OBJS)
+	$(CC) $(OBJS) $(GNL_OBJS) -o $@ $(LFLAGS)
 
 clean:
 	rm -rf *.o get_next_line/*.o
+
+fclean: clean
+	rm -rf $(NAME)
+
+re:	fclean all
