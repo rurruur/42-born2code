@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 23:40:17 by nakkim            #+#    #+#             */
-/*   Updated: 2022/04/29 22:35:10 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/04 23:14:16 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,49 @@ void	iso(t_coor* c)
 
 void draw_map(void *mlx_ptr, void *win_ptr, t_map map)
 {
-	int		x;
-	int		y;
 	int		row_index;
 	int		col_index;
+	t_coor	curr_coor;
+	t_coor	next_coor;
 
 
 	col_index = 0;
-	y = 100;
-	while (col_index++ < map.col_size)
+	curr_coor.y = 100;	// 시작 y값
+	next_coor.y = 100;
+	while (col_index < map.col_size)
 	{
-		x = 100 + PIXEL;
 		row_index = 0;
-		while (++row_index < map.row_size)
+		curr_coor.x = 100;
+		while (row_index < map.row_size - 1)
 		{
-			bresenham((x - PIXEL), y, x, y, mlx_ptr, win_ptr);
-			x += PIXEL;
+			curr_coor.z = map.info[col_index][row_index];
+			next_coor.x = curr_coor.x + PIXEL;
+			next_coor.z = map.info[col_index][++row_index];
+			bresenham(curr_coor, next_coor, mlx_ptr, win_ptr);
+			curr_coor.x += PIXEL;
 		}
-		y += PIXEL;
+		curr_coor.y += PIXEL;
+		next_coor.y += PIXEL;
+		col_index++;
 	}
 	row_index = 0;
-	x = 100;
-	while (row_index++ < map.row_size)
+	curr_coor.x = 100;	// 시작 x값
+	next_coor.x = 100;
+	while (row_index < map.row_size)
 	{
 		col_index = 0;
-		y = 100 + PIXEL;
-		while (++col_index < map.col_size)
+		curr_coor.y = 100;
+		while (col_index < map.col_size - 1)
 		{
-			bresenham(x, (y - PIXEL), x, y, mlx_ptr, win_ptr);
-			y += PIXEL;
+			curr_coor.z = map.info[col_index][row_index];
+			next_coor.y = curr_coor.y + PIXEL;
+			next_coor.z = map.info[++col_index][row_index];
+			bresenham(curr_coor, next_coor, mlx_ptr, win_ptr);
+			curr_coor.y += PIXEL;
 		}
-		x += PIXEL;
+		curr_coor.x += PIXEL;
+		next_coor.x += PIXEL;
+		row_index++;
 	}
 }
 
@@ -76,6 +88,7 @@ void	createMap(char* map_file, t_map *map)
 	int		col;
 	int		index;
 
+	// 좌표가 딱 하나일 때???
 	fd = open(map_file, O_RDONLY);
 	if (fd == -1)
 		exit(1);
@@ -101,6 +114,8 @@ void	createMap(char* map_file, t_map *map)
 		result = get_next_line(fd);
 	}
 	close(fd);
+	map->bottom = 2147483647;
+	map->top = -2147483648;
 	map->col_size = col;
 	map->row_size = row_max;
 	printf("row: %d, col:%d\n", row_max, col);
@@ -147,6 +162,10 @@ void	getMapInfo(char *map_file, t_map *map)
 				index++;
 			}
 			map->info[col][row] = num * flag;
+			if (map->bottom > map->info[col][row])
+				map->bottom = map->info[col][row];
+			else if (map->top < map->info[col][row])
+				map->top = map->info[col][row];
 			row++;
 			while (result[index] == ' ' || result[index] == '\n')
 				index++;
@@ -183,17 +202,8 @@ int	main(int argc, char **argv)
 
 	bre.x = 10;
 	bre.y = 10;
-	// Bresenham(&bre, 20, 20, mlx_ptr, win_ptr);
 
 	draw_map(mlx_ptr, win_ptr, map);
-
-	// 이미지를 조작해보자..
-	// void	*img_ptr = mlx_new_image(mlx_ptr, 200, 300);
-	// int	bits_per_pixel = 16;
-	// int	size_line = 200;
-	// mlx_get_data_addr(img_ptr, &bits_per_pixel, &size_line, NULL);
-	// mlx_put_image_to_window(mlx_ptr, win_ptr, img_ptr, 10, 20);
-	// 그만해보자...
 
 	mlx_loop(mlx_ptr);
 	// mlx_loop_hook(mlx_ptr, key_hook, param);

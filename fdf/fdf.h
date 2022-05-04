@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 23:40:19 by nakkim            #+#    #+#             */
-/*   Updated: 2022/04/29 22:34:47 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/04 21:41:56 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct map
 	int	**info;
 	int	col_size;
 	int	row_size;
+	int	bottom;
+	int	top;
 }	t_map;
 
 
@@ -62,7 +64,7 @@ typedef struct image
 	int		endian;
 }	t_img;
 
-void	bresenham(int x0, int y0, int x1, int y1, void* mlx_ptr, void* win_ptr);
+void	bresenham(t_coor curr, t_coor next, void* mlx_ptr, void* win_ptr);
 void	mark_dot(void *mlx_ptr, int x, int y, int color, void* win_ptr);
 
 #endif

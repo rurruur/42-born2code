@@ -1,6 +1,6 @@
 # include "fdf.h"
 
-void	plotLineLow(int x0, int y0, int x1, int y1, void* mlx_ptr, void* win_ptr)
+void	plotLineLow(t_coor curr, t_coor next, void* mlx_ptr, void* win_ptr)
 {
 	int	dx;
 	int	dy;
@@ -8,30 +8,30 @@ void	plotLineLow(int x0, int y0, int x1, int y1, void* mlx_ptr, void* win_ptr)
 	int	distance;
 
 	yi = 1;
-	dx = x1 - x0;
-	dy = y1 - y0;
+	dx = next.x - curr.x;
+	dy = next.y - curr.y;
 	if (dy < 0)
 	{
 		yi = -yi;
 		dy = -dy;
 	}
 	distance = 2 * dy - dx;
-	while (x0 <= x1)
+	while (curr.x <= next.x)
 	{
-		mark_dot(mlx_ptr, x0, y0, 0xabcdef, win_ptr);
+		mark_dot(mlx_ptr, curr.x, curr.y, 0xabcdef, win_ptr);
 		// mlx_pixel_put(mlx_ptr, win_ptr, x0, y0, 0x00FFFFFF);
-		x0++;
+		curr.x++;
 		if (distance < 0)
 			distance += 2 * dy;
 		else
 		{
 			distance += 2 * (dy - dx);
-			y0 += yi;
+			curr.y += yi;
 		}
 	}
 }
 
-void	plotLineHigh(int x0, int y0, int x1, int y1, void* mlx_ptr, void* win_ptr)
+void	plotLineHigh(t_coor curr, t_coor next, void* mlx_ptr, void* win_ptr)
 {
 	int	dx;
 	int	dy;
@@ -39,43 +39,43 @@ void	plotLineHigh(int x0, int y0, int x1, int y1, void* mlx_ptr, void* win_ptr)
 	int	distance;
 
 	xi = 1;
-	dx = x1 - x0;
-	dy = y1 - y0;
+	dx = next.x - curr.x;
+	dy = next.y - curr.y;
 	if (dx < 0)
 	{
 		xi = -xi;
 		dx = -dx;
 	}
 	distance = 2 * dx - dy;
-	while (y0 <= y1)
+	while (curr.y <= next.y)
 	{
-		mark_dot(mlx_ptr, x0, y0, 0xabcdef, win_ptr);
+		mark_dot(mlx_ptr, curr.x, curr.y, 0xabcdef, win_ptr);
 		// mlx_pixel_put(mlx_ptr, win_ptr, x0, y0, 0x00FFFFFF);
-		y0++;
+		curr.y++;
 		if (distance < 0)
 			distance += 2 * dx;
 		else
 		{
 			distance += 2 * (dx - dy);
-			x0 += xi;
+			curr.x += xi;
 		}
 	}
 }
 
-void	bresenham(int x0, int y0, int x1, int y1, void* mlx_ptr, void* win_ptr)
+void	bresenham(t_coor curr, t_coor next, void* mlx_ptr, void* win_ptr)
 {
-	if (abs(x1 - x0) > abs(y1 - y0))
+	if (abs(next.x - curr.x) > abs(next.y - curr.y))
 	{
-		if (x0 < x1)
-			plotLineLow(x0, y0, x1, y1, mlx_ptr, win_ptr);
+		if (curr.x < next.x)
+			plotLineLow(curr, next, mlx_ptr, win_ptr);
 		else
-			plotLineLow(x1, y1, x0, y0, mlx_ptr, win_ptr);
+			plotLineLow(next, curr, mlx_ptr, win_ptr);
 	}
 	else
 	{
-		if (y0 < y1)
-			plotLineHigh(x0, y0, x1, y1, mlx_ptr, win_ptr);
+		if (curr.y < next.y)
+			plotLineHigh(curr, next, mlx_ptr, win_ptr);
 		else
-			plotLineHigh(x1, y1, x0, y0, mlx_ptr, win_ptr);
+			plotLineHigh(next, curr, mlx_ptr, win_ptr);
 	}
 }
