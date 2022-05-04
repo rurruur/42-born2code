@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 23:40:17 by nakkim            #+#    #+#             */
-/*   Updated: 2022/04/26 23:48:24 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/04/29 22:35:10 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,27 @@ void draw_map(void *mlx_ptr, void *win_ptr, t_map map)
 	y = 100;
 	while (col_index++ < map.col_size)
 	{
-		x = 130;
+		x = 100 + PIXEL;
 		row_index = 0;
 		while (++row_index < map.row_size)
 		{
-			bresenham((x - 30), y, x, y, mlx_ptr, win_ptr);
-			x += 30;
+			bresenham((x - PIXEL), y, x, y, mlx_ptr, win_ptr);
+			x += PIXEL;
 		}
-		y += 30;
+		y += PIXEL;
 	}
 	row_index = 0;
 	x = 100;
 	while (row_index++ < map.row_size)
 	{
 		col_index = 0;
-		y = 130;
+		y = 100 + PIXEL;
 		while (++col_index < map.col_size)
 		{
-			bresenham(x, (y - 30), x, y, mlx_ptr, win_ptr);
-			y += 30;
+			bresenham(x, (y - PIXEL), x, y, mlx_ptr, win_ptr);
+			y += PIXEL;
 		}
-		x += 30;
+		x += PIXEL;
 	}
 }
 
@@ -173,19 +173,12 @@ int	main(int argc, char **argv)
 	// julia 같은 맵..안됨ㅡㅡ
 	createMap(argv[1], &map);
 	getMapInfo(argv[1], &map);
-
-	// for (int i = 0; i < map.col_size; i++)
-	// {
-	// 	for (int j = 0; j < map.row_size; j++)
-	// 	{
-	// 		printf("%d ", map.info[i][j]);
-	// 	}
-	// 	puts("");
-	// }
+	
 	param = NULL;
 	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, SIZE_X, SIZE_Y, TITLE);
+	win_ptr = mlx_new_window(mlx_ptr, map.row_size * PIXEL + 200, map.col_size * PIXEL + 200, TITLE);
 	mlx_key_hook(win_ptr, key_hook, param);
+	// x 클릭도 추가
 	mlx_clear_window(mlx_ptr, win_ptr);
 
 	bre.x = 10;

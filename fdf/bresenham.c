@@ -18,7 +18,8 @@ void	plotLineLow(int x0, int y0, int x1, int y1, void* mlx_ptr, void* win_ptr)
 	distance = 2 * dy - dx;
 	while (x0 <= x1)
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, x0, y0, 0x00FFFFFF);
+		mark_dot(mlx_ptr, x0, y0, 0xabcdef, win_ptr);
+		// mlx_pixel_put(mlx_ptr, win_ptr, x0, y0, 0x00FFFFFF);
 		x0++;
 		if (distance < 0)
 			distance += 2 * dy;
@@ -48,7 +49,8 @@ void	plotLineHigh(int x0, int y0, int x1, int y1, void* mlx_ptr, void* win_ptr)
 	distance = 2 * dx - dy;
 	while (y0 <= y1)
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, x0, y0, 0x00FFFFFF);
+		mark_dot(mlx_ptr, x0, y0, 0xabcdef, win_ptr);
+		// mlx_pixel_put(mlx_ptr, win_ptr, x0, y0, 0x00FFFFFF);
 		y0++;
 		if (distance < 0)
 			distance += 2 * dx;
