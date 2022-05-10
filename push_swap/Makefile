@@ -1,7 +1,7 @@
 NAME = push_swap
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = push_swap.c list_module.c list_operator.c sort_module.c node_module.c
+SRCS = push_swap.c set_info.c list_module.c quick_sort.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -15,7 +15,12 @@ $(NAME): ./libft/libft.a $(OBJS)
 clean:
 	rm -f $(OBJS) ./libft/*.o
 
-fclean: clean
+fclean:
+	make clean
 	rm -f $(NAME) ./libft/libft.a
 
-re: fclean all
+re:
+	make fclean
+	make all
+
+.PHONY: all clean fclean re

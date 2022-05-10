@@ -5,93 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 14:31:26 by nakkim            #+#    #+#             */
-/*   Updated: 2022/02/01 17:09:28 by nakkim           ###   ########.fr       */
+/*   Created: 2022/05/10 13:31:32 by nakkim            #+#    #+#             */
+/*   Updated: 2022/05/10 13:42:22 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	destroy_list(t_node *head)
-{
-	t_node	*curr;
-	t_node	*remove;
-
-	if (head)
-	{
-		curr = head->next_node;
-		free(head);
-		while (curr != head)
-		{
-			remove = curr;
-			curr = curr->next_node;
-			free(remove);
-		}
-	}
-}
-
-// test
-void	print_list(t_node *head)
-{
-	t_node	*curr;
-
-	curr = head;
-	if (head)
-	{
-		printf("head %p\ttail %p\n", head, head->prev_node);
-		printf("[%p] %d [%p]\n", head, head->data, head->next_node);
-		curr = head->next_node;
-		while (curr != head)
-		{
-			printf("[%p] %d [%p]\n", curr, curr->data, curr->next_node);
-			curr = curr->next_node;
-		}
-	}
-}
-
-t_node	*create_node(int num)
+t_node	*create_node(int val)
 {
 	t_node	*node;
 
-	node = (t_node *)malloc(sizeof(t_node));
-	// 널가드?
-	node->data = num;
-	node->prev_node = 0;
-	node->next_node = 0;
+	node = (t_node*)malloc(sizeof(t_node));
+	node->val = val;
+	node->next = NULL;
+	node->prev = NULL;
 	return (node);
 }
 
-void	append_node(t_node **head, t_node *node)
+void	add_top(t_node *newNode, t_stack *stack)
 {
-	t_node	*tail;
-
-	if (!(*head))
+	if (stack->list != NULL)
 	{
-		*head = node;
-		(*head)->prev_node = node;
-		(*head)->next_node = node;
-		return ;
+		newNode->next = stack->list;
+		newNode->prev = stack->list->prev;
 	}
-	tail = (*head)->prev_node;
-	node->next_node = *head;
-	(*head)->prev_node = node;
-	node->prev_node = tail;
-	tail->next_node = node;
-}
-
-void	add_top(t_node **head, t_node *node)
-{
-	t_node	*tail;
-
-	if (!(*head))
+	else
 	{
-		append_node(head, node);
-		return ;
+		newNode->next = newNode;
+		newNode->prev = newNode;
 	}
-	tail = (*head)->prev_node;
-	tail->next_node = node;
-	(*head)->prev_node = node;
-	node->prev_node = tail;
-	node->next_node = *head;
-	*head = node;
+	stack->list = newNode;
+	(stack->size)++;
 }
