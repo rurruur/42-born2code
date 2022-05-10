@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:31:32 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/10 13:42:22 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/10 17:02:21 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	add_top(t_node *newNode, t_stack *stack)
 	{
 		newNode->next = stack->list;
 		newNode->prev = stack->list->prev;
+		stack->list->prev->next = newNode;
+		stack->list->prev = newNode;
 	}
 	else
 	{
@@ -37,4 +39,49 @@ void	add_top(t_node *newNode, t_stack *stack)
 	}
 	stack->list = newNode;
 	(stack->size)++;
+}
+
+t_node	*del_top(t_stack *stack)
+{
+	t_node	*remove;
+
+	remove = stack->list;
+	stack->list->next->prev = remove->prev;
+	stack->list->prev->next = remove->next;
+	stack->list = remove->next;
+	if (stack->list == remove)
+		stack->list = NULL;
+	(stack->size)--;
+	return (remove);
+}
+
+void	add_cmd(t_info *info, char *cmd)
+{
+	t_cmd	*new_cmd;
+	t_cmd	*last;
+
+	new_cmd = (t_cmd*)malloc(sizeof(t_cmd));
+	new_cmd->name = cmd;
+	new_cmd->next = NULL;
+	if (info->cmds == NULL)
+	{
+		info->cmds = new_cmd;
+		return ;
+	}
+	last = info->cmds;
+	while (last->next != NULL)
+		last = last->next;
+	last->next = new_cmd;
+}
+
+void	push(t_info *info, t_stack *src, t_stack *dest, char *cmd)
+{
+	add_top(del_top(src), dest);
+	add_cmd(info, cmd);
+}
+
+void	rotate(t_info *info, t_stack *target, char *cmd)
+{
+	target->list = target->list->next;
+	add_cmd(info, cmd);
 }
