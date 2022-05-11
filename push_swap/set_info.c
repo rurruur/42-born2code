@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:21:06 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/10 16:51:45 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/11 16:09:47 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	set_info(t_info *info, int argc, char **argv)
 	int	index;
 
 	info->count = get_num_count(argc, argv);
-	printf("%d\n", info->count);
 	info->sorted_arr = (int*)malloc(sizeof(int) * info->count);
 	if (!(info->sorted_arr))
 		exit(1);
@@ -25,8 +24,8 @@ void	set_info(t_info *info, int argc, char **argv)
 	info->stack_a = create_stack();
 	info->stack_b = create_stack();
 	info->cmds = NULL;
-	index = -1;
-	while (++index < info->count)
+	index = info->count;
+	while (index--)
 		add_top(create_node(info->sorted_arr[index]), info->stack_a);
 }
 

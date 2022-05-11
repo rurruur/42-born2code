@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:31:32 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/10 17:02:21 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/11 14:46:46 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,23 @@ void	push(t_info *info, t_stack *src, t_stack *dest, char *cmd)
 void	rotate(t_info *info, t_stack *target, char *cmd)
 {
 	target->list = target->list->next;
+	add_cmd(info, cmd);
+}
+
+void	swap(t_info *info, t_node **target, char *cmd)
+{
+	t_node	*next;
+
+	next = (*target)->next;
+
+	(*target)->prev->next = next;
+	next->prev = (*target)->prev;
+	
+	(*target)->next = next->next;
+	next->next->prev = *target;
+	
+	next->next = *target;
+	(*target)->prev = next;
+	*target = next;
 	add_cmd(info, cmd);
 }
