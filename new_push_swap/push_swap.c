@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:11:29 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/19 20:59:25 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/20 21:16:57 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,15 +117,11 @@ void	set_top(t_info *info)
 	while (info->stack[index] != max)
 		index++;
 	if (index < info->a + max / 2)
-	{
 		while (info->stack[info->a + 1] != max)
 			rotate_b(info);
-	}
 	else
-	{
 		while (info->stack[info->a + 1] != max)
 			reverse_rotate_b(info);
-	}
 }
 
 void	b_to_a(t_info *info)
@@ -158,56 +154,65 @@ void	check_dup(t_info *info)
 
 void	sort_3(t_info *info)
 {
-	// 1 3 2
 	if (info->stack[2] < info->stack[1] && info->stack[2] < info->stack[0])
 	{
 		reverse_rotate_a(info);
 		swap_a(info);
 	}
-	// 2 1 3
-	else if (info->stack[2] > info->stack[1] && info->stack[2] < info->stack[0])
+	else if ((info->stack[2] > info->stack[1] && info->stack[2] < info->stack[0]) || (info->stack[2] < info->stack[1] && info->stack[2] > info->stack[0]))
 	{
 		if (info->stack[1] < info->stack[0])
 			swap_a(info);
-		else  // 2 3 1
+		else
 			reverse_rotate_a(info);
 	}
-	// 3 1 2
-	else if (info->stack[2] > info->stack[1] && info->stack[2] > info->stack[0]
-		&& info->stack[1] < info->stack[0])
-		rotate_a(info);
-	else
+	else if (info->stack[2] > info->stack[1] && info->stack[2] > info->stack[0])
 	{
-		swap_a(info);
-		reverse_rotate_a(info);
+		if (info->stack[1] < info->stack[0])
+			rotate_a(info);
+		else
+		{
+			swap_a(info);
+			reverse_rotate_a(info);
+		}
 	}
-	// 3 2 1
+}
+
+void	set_top_custom(t_info *info, int num)
+{
+	int	index;
+
+	index = 0;
+	while (info->stack[index] != num)
+		index++;
+	if (index < (info->a + 1) / 2)
+		while (info->stack[info->a] != num)
+			reverse_rotate_a(info);
+	else
+		while (info->stack[info->a] != num)
+			rotate_a(info);
+}
+
+void	sort_5(t_info *info)
+{
+	set_top_custom(info, 0);
+	push_b(info);
+	set_top_custom(info, 1);
+	push_b(info);
+	if (!(info->stack[2] == 2 && info->stack[1] == 3 && info->stack[0] == 4))
+		sort_3(info);
+	push_a(info);
+	push_a(info);
 }
 
 void	hard_sort(t_info *info)
 {
-	// int	index;
-
-	// if (info->count == 4)
-	// {
-	// 	index = 0;
-	// 	while (info->stack[index] != 4)
-	// 		index++;
-	// 	if (index >= info->count / 2)
-	// 	{
-	// 		while (info->stack[3] != max)
-	// 			rotate_a(info);
-	// 	}
-	// 	else
-	// 	{
-	// 		while (info->stack[3] != max)
-	// 			reverse_rotate_a(info);
-	// 	}
-	// }
 	if (info->count == 2)
 		rotate_a(info);
-	if (info->count == 3)
+	else if (info->count == 3)
 		sort_3(info);
+	else if (info->count == 5)
+		sort_5(info);
 }
 
 int	main(int argc, char **argv)
@@ -220,7 +225,7 @@ int	main(int argc, char **argv)
 	// print_stack(info);
 	if (is_sorted(&info))
 		return (0);
-	if (info.count <= 3)
+	if (info.count <= 5)
 		hard_sort(&info);
 	else
 	{

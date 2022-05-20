@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:13:04 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/19 20:22:51 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/20 20:32:52 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	is_num(char c)
 
 void	set_info(t_info *info, int argc, char **argv)
 {
-	int	index;
-
 	info->count = get_num_count(argc, argv);
 	info->stack = (int *)malloc(sizeof(int) * info->count);
 	if (!(info->stack))
@@ -28,7 +26,6 @@ void	set_info(t_info *info, int argc, char **argv)
 	set_nums(*info, argc, argv);
 	info->a = info->count - 1;
 	info->chunk = 0.000000053 * (info->count * info->count) +  0.03 * info->count + 14.5;
-	index = info->count;
 }
 
 int	get_num_count(int argc, char **argv)
