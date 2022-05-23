@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:54:32 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/19 17:55:22 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/23 15:45:40 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,28 @@ void	swap(int *arr, int index1, int index2)
 
 void	quick_sort(int *arr, int left, int right)
 {
-	int	L;
-	int	R;
-	
-	L = left + 1;
-	R = right;
-	while (L < R)
+	int	left_i;
+	int	right_i;
+
+	left_i = left + 1;
+	right_i = right;
+	while (left_i < right_i)
 	{
-		while (L <= R && arr[L] <= arr[left])
-			L++;
-		while (R > L && arr[R] > arr[left])
-			R--;
-		if (L < R)
+		while (left_i <= right_i && arr[left_i] <= arr[left])
+			left_i++;
+		while (right_i > left_i && arr[right_i] > arr[left])
+			right_i--;
+		if (left_i < right_i)
 		{
-			swap(arr, L, R);
-			L++;
-			R--;
+			swap(arr, left_i, right_i);
+			left_i++;
+			right_i--;
 		}
 	}
-	if (arr[left] > arr[R])
-		swap(arr, left, R);
-	if (left < R)
-		quick_sort(arr, left, R - 1);
-	if (R < right)
-		quick_sort(arr, R, right);
+	if (arr[left] > arr[right_i])
+		swap(arr, left, right_i);
+	if (left < right_i)
+		quick_sort(arr, left, right_i - 1);
+	if (right_i < right)
+		quick_sort(arr, right_i, right);
 }

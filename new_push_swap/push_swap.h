@@ -6,17 +6,15 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:11:20 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/19 19:40:48 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/23 16:36:32 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
 # include <stdlib.h>
-# include "./libft/libft.h"
+# include <unistd.h>
 
 typedef struct s_info
 {
@@ -28,6 +26,7 @@ typedef struct s_info
 
 void	error(void);
 int		is_num(char c);
+int		is_sorted(t_info *info);
 void	set_nums(t_info info, int argc, char **argv);
 int		get_num_count(int argc, char **argv);
 void	set_info(t_info *info, int argc, char **argv);
@@ -45,7 +44,6 @@ void	set_top(t_info *info);
 void	a_to_b(t_info *info);
 void	b_to_a(t_info *info);
 void	check_dup(t_info *info);
-
-void	print_stack(t_info info);
+void	hard_sort(t_info *info);
 
 #endif
