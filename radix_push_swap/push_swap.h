@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:11:20 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/25 17:07:36 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/05/25 23:03:41 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
+
+# include <stdlib.h>
+# include <unistd.h>
+
+# include <stdio.h>
+
+# define INT_MIN -2147483648
 
 typedef struct s_node
 {
@@ -22,7 +29,7 @@ typedef struct s_node
 
 typedef struct s_stack
 {
-	t_node*	list;
+	t_node*	head;
 	int		size;
 }	t_stack;
 
@@ -30,6 +37,7 @@ typedef struct s_cmd
 {
 	char*			name;
 	struct s_cmd	*next;
+	struct s_cmd	*prev;
 }	t_cmd;
 
 typedef struct s_info
@@ -41,21 +49,28 @@ typedef struct s_info
 	t_cmd	*cmds;
 }	t_info;
 
+void	error(void);
+void	check_dup(t_info *info);
 int		is_num(char c);
-int		get_num_size(int argc, char **argv);
-void	set_nums(int *nums, int argc, char **argv);
-void	set_info(t_info *info, int argc, char **argv);
-t_stack	*create_stack(void);
+int		is_sorted(t_stack *stack, int flag);
+void	add_top(t_stack *stack, t_node *new_node);
 t_node	*create_node(int val);
-void	add_top(t_node *newNode, t_stack *stack);
-t_node	*del_top(t_stack *stack);
-void	quick_sort(int *arr, int left, int right);
+t_stack	*create_stack(void);
+t_node	*pop(t_stack *stack);
+t_cmd*	create_cmd(char *cmd);
+void	add_cmd(t_info *info, t_cmd *new_cmd);
 void	push(t_info *info, t_stack *src, t_stack *dest, char *cmd);
 void	rotate(t_info *info, t_stack *target, char *cmd);
-void	swap(t_info *info, t_node **target, char *cmd);
-int		sort_a(t_info *info, int left, int right);
-int		sort_b(t_info *info, int left, int right);
-
-void	print_stack(t_stack *stack);
+void	reverse_rotate(t_info *info, t_stack *target, char *cmd);
+void	swap(t_info *info, t_stack *target, char *cmd);
+void	quick_sort(int *arr, int left, int right);
+void	set_nums(t_info info, int argc, char **argv);
+int		my_atoi(char *ptr, int *i);
+int		get_list_size(int argc, char **argv);
+void	set_info(t_info *info, int argc, char **argv);
+void	hard_sort(t_info *info);
+void	check_dup(t_info *info);
+void	process_indexing(t_info *info);
+void	sort(t_info *info);
 
 #endif
