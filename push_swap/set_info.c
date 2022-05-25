@@ -5,38 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 13:21:06 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/11 16:09:47 by nakkim           ###   ########.fr       */
+/*   Created: 2022/05/19 16:13:04 by nakkim            #+#    #+#             */
+/*   Updated: 2022/05/23 16:36:18 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	set_info(t_info *info, int argc, char **argv)
+int	is_num(char c)
 {
-	int	index;
-
-	info->count = get_num_count(argc, argv);
-	info->sorted_arr = (int*)malloc(sizeof(int) * info->count);
-	if (!(info->sorted_arr))
-		exit(1);
-	set_nums(info->sorted_arr, argc, argv);
-	info->stack_a = create_stack();
-	info->stack_b = create_stack();
-	info->cmds = NULL;
-	index = info->count;
-	while (index--)
-		add_top(create_node(info->sorted_arr[index]), info->stack_a);
+	return (c >= '0' && c <= '9');
 }
 
-t_stack	*create_stack(void)
+void	set_info(t_info *info, int argc, char **argv)
 {
-	t_stack	*stack;
-
-	stack = (t_stack*)malloc(sizeof(t_stack));
-	stack->size = 0;
-	stack->list = NULL;
-	return (stack);
+	info->count = get_num_count(argc, argv);
+	info->stack = (int *)malloc(sizeof(int) * info->count);
+	if (!(info->stack))
+		error();
+	set_nums(*info, argc, argv);
+	info->a = info->count - 1;
+	info->chunk = 0.000000053 * (info->count * info->count)
+		+ 0.03 * info->count + 14.5;
 }
 
 int	get_num_count(int argc, char **argv)
@@ -50,47 +40,68 @@ int	get_num_count(int argc, char **argv)
 		index = 0;
 		while (argv[argc][index])
 		{
+			while (argv[argc][index] == '-' || argv[argc][index] == '+')
+				index++;
 			if (is_num(argv[argc][index]))
 			{
 				count++;
 				while (is_num(argv[argc][index]))
 					index++;
 			}
-			else
+			else if (argv[argc][index] == ' ')
 				index++;
+			else
+				error();
 		}
 	}
 	return (count);
 }
 
-void	set_nums(int *nums, int argc, char **argv)
+int	my_atoi(char *ptr, int *i)
 {
-	int		index;
-	int		flag;
+	int		sign;
+	long	num;
 
-	index = 1;
-	flag = 1;
-	while (index < argc)
+	sign = 1;
+	num = 0;
+	while (ptr[*i] == ' ' || (ptr[*i] >= 9 && ptr[*i] <= 13))
+		(*i)++;
+	if (ptr[*i] == '-' || ptr[*i] == '+')
 	{
-		while (*(argv[index]))
+		if (ptr[*i] == '-')
+			sign = -sign;
+		(*i)++;
+	}
+	while (ptr[*i] >= '0' && ptr[*i] <= '9')
+	{
+		num = num * 10 + ptr[*i] - '0';
+		(*i)++;
+	}
+	if (num * sign > 2147483647 || num * sign < -2147483648)
+		error();
+	return (num * sign);
+}
+
+void	set_nums(t_info info, int argc, char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (i < argc)
+	{
+		j = 0;
+		while (argv[i][j])
 		{
-			if (*(argv[index]) == '-' || *(argv[index]) == '+')
-				flag = 44 - *(argv[index]);
-			if (is_num(*(argv[index])))
+			if (is_num(argv[i][j]) || argv[i][j] == ' '
+				|| argv[i][j] == '-' || argv[i][j] == '+')
 			{
-				*nums = 0;
-				while (is_num(*(argv[index])))
-				{
-					*nums = *nums * 10 + *(argv[index]) - '0';
-					(argv[index])++;
-				}
-				*nums *= flag;
-				flag = 1;
-				nums++;
+				info.stack[info.count - 1] = my_atoi(argv[i], &j);
+				(info.count)--;
 			}
 			else
-				(argv[index])++;
+				error();
 		}
-		index++;
+		i++;
 	}
 }

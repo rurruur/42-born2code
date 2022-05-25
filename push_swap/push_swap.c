@@ -5,241 +5,103 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 12:35:21 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/11 16:15:45 by nakkim           ###   ########.fr       */
+/*   Created: 2022/05/19 16:11:29 by nakkim            #+#    #+#             */
+/*   Updated: 2022/05/25 14:59:36 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_stack(t_stack *stack)
+void	indexing(t_info *info)
 {
-	t_node	*curr = stack->list;
-	puts("=======");
-	for (int i = 0; i < stack->size; i++)
+	int	*sorted;
+	int	index;
+	int	info_index;
+
+	sorted = (int *)malloc(sizeof(int) * info->count);
+	index = -1;
+	while (++index < info->count)
+		sorted[index] = info->stack[index];
+	quick_sort(sorted, 0, info->count - 1);
+	info_index = 0;
+	while (info_index < info->count)
 	{
-		printf("[%d] %d [%d]\n", curr->prev->val, curr->val, curr->next->val);
-		curr = curr->next;
+		index = 0;
+		while (sorted[index] != info->stack[info_index])
+			index++;
+		info->stack[info_index] = index;
+		info_index++;
 	}
-	puts("");
+	free(sorted);
 }
 
-int	my_strcmp(char *cmd1, char *cmd2)
+void	a_to_b(t_info *info)
 {
-	if (cmd1[0] == cmd2[0] && cmd1[1] == cmd2[1])
-		return (1);
-	return (0);
-}
+	int	num;
+	int	top;
 
-int	check_cmd(char *cmd)
-{
-	if (my_strcmp(cmd, "ra"))
-		return (10);
-	else if (my_strcmp(cmd, "rb"))
-		return (11);
-	else if (my_strcmp(cmd, "pa"))
-		return (20);
-	else if (my_strcmp(cmd, "pb"))
-		return (21);
-	return (0);
-}
-
-void	print_cmds(t_cmd *cmds)
-{
-	while (cmds != NULL)
+	num = 0;
+	while (num < info->count)
 	{
-		if (cmds->next == NULL || !(check_cmd(cmds->name) - check_cmd(cmds->next->name) == 1
-			|| check_cmd(cmds->name) - check_cmd(cmds->next->name) == -1))
+		top = info->stack[info->a];
+		if (top <= num)
 		{
-			printf("%s\n", cmds->name);
-			cmds = cmds->next;
+			push_b(info);
+			num++;
+		}
+		else if (top > num && top <= num + info->chunk)
+		{
+			push_b(info);
+			rotate_b(info);
+			num++;
 		}
 		else
-			cmds = cmds->next->next;
+			rotate_a(info);
 	}
 }
 
-int	is_num(char c)
+void	set_top(t_info *info)
 {
-	return (c >= '0' && c <= '9');
-}
+	int	max;
+	int	index;
 
-int	is_sorted(t_stack *stack, int flag)
-{
-	int		count;
-	t_node	*curr;
-
-	count = stack->size;
-	curr = stack->list;
-	if (flag)
-	{
-		while (--count)
-		{
-			if (curr->val > curr->next->val)
-				return (0);
-			curr = curr->next;
-		}
-	}
+	index = info->a + 1;
+	max = info->count - (info->a + 1) - 1;
+	while (info->stack[index] != max)
+		index++;
+	if (index < info->a + max / 2)
+		while (info->stack[info->a + 1] != max)
+			rotate_b(info);
 	else
-	{
-		while (--count)
-		{
-			if (curr->val < curr->next->val)
-				return (0);
-			curr = curr->next;
-		}
-	}
-	return (1);
+		while (info->stack[info->a + 1] != max)
+			reverse_rotate_b(info);
 }
 
-void	sort_three(t_info *info, t_stack *stack)
+void	b_to_a(t_info *info)
 {
-	// 1 3 2
-	// 2 1 3
-	// 2 3 1
-	// 3 1 2
-	// 3 2 1
-	if (stack->list->val < stack->list->next->val && stack->list->val < stack->list->prev->val)
-		
-}
-
-int	sort_a(t_info *info, int left, int right)
-{	
-	int		pivot;
-	int		count;
-
-	if (is_sorted(info->stack_a, 1))
-		return (left - 1);
-	if (right - left < 3)
+	while (info->a < info->count - 1)
 	{
-		sort_three(info, info->stack_a);
-		return (left - 1);
+		set_top(info);
+		push_a(info);
 	}
-	pivot = left + (right - left) / 2;
-	count = info->stack_a->size;
-	while (count-- > 0)
-	{
-		if (info->stack_a->list->val <= info->sorted_arr[pivot])
-			push(info, info->stack_a, info->stack_b, "pb");
-		else
-			rotate(info, info->stack_a, "ra");
-	}
-	return (sort_a(info, left + (right - left) / 2 + 1, right));
-}
-
-void	sort(t_info *info, int left, int right)
-{
-	int		pivot;
-	int		count;
-	int		last_pivot;
-
-	if (is_sorted(info->stack_a, 1))
-		return ;
-	if (right - left < 3)
-	{
-		sort_three(info, info->stack_a);
-		return ;
-	}
-	pivot = left + (right - left) / 2;
-	count = info->stack_a->size;
-	while (count-- > 0)
-	{
-
-		if (info->stack_a->list->val <= info->sorted_arr[pivot])
-			push(info, info->stack_a, info->stack_b, "pb");
-		else
-			rotate(info, info->stack_a, "ra");
-	}
-	last_pivot = sort_a(info, left + (right - left) / 2 + 1, right);
-	// b스택 -> a스택
-	while (last_pivot > pivot)
-	{
-		count = 2;
-		while (count)
-		{
-			if (info->stack_b->list->val >= info->sorted_arr[last_pivot - 1]
-				&& info->stack_b->list->val <= info->sorted_arr[last_pivot])
-			{
-				push(info, info->stack_b, info->stack_a, "pa");
-				count--;
-			}
-			else
-				rotate(info, info->stack_b, "rb");
-		}
-		if (!is_sorted(info->stack_a, 1))
-			swap(info, &(info->stack_a->list), "sa");
-		last_pivot -= 2;
-	}
-
-	// sort_b
-	last_pivot = sort_b(info, 0, pivot - 1);
-	// b -> a
-	while (last_pivot < pivot)
-	{
-		count = 2;
-		while (count)
-		{
-			if (info->stack_a->list->val >= info->sorted_arr[last_pivot]
-				&& info->stack_a->list->val <= info->sorted_arr[last_pivot + 1])
-			{
-				push(info, info->stack_a, info->stack_b, "pb");
-				count--;
-			}
-			else
-				rotate(info, info->stack_a, "ra");
-		}
-		if (!is_sorted(info->stack_b, 0))
-			swap(info, &(info->stack_b->list), "sb");
-		last_pivot += 2;
-	}
-	
-	// 전부 a로
-	while (info->stack_b->size)
-		push(info, info->stack_b, info->stack_a, "pa");
-}
-
-int	sort_b(t_info *info, int left, int right)
-{
-	int		pivot;
-	int		count;
-
-	if (is_sorted(info->stack_b, 0))
-		return (right + 2);
-	if (right - left < 3)
-	{
-		sort_three(info, stack_b);
-		return (right + 2);
-	}
-	pivot = (right - left) / 2;
-	count = info->stack_b->size;
-	while (count-- > 0)
-	{
-		if (info->stack_b->list->val > info->sorted_arr[pivot])
-			push(info, info->stack_b, info->stack_a, "pa");
-		else
-			rotate(info, info->stack_b, "rb");
-	}
-	return (sort_b(info, left, (right - left) / 2 - 1));
 }
 
 int	main(int argc, char **argv)
 {
 	t_info	info;
 
-	if (argc < 2)
-		return (0);
 	set_info(&info, argc, argv);
-	// print_stack(info.stack_a);
-	quick_sort(info.sorted_arr, 0, info.count - 1);
-	// for (int i = 0; i < info.count; i++)
-	// 	printf("%d ", info.sorted_arr[i]);
-	// puts("");
-
-	sort(&info, 0, info.count - 1);
-	// print_stack(info.stack_a);
-	// print_stack(info.stack_b);
-
-	print_cmds(info.cmds);
-
+	check_dup(&info);
+	indexing(&info);
+	if (is_sorted(&info))
+		return (0);
+	if (info.count <= 5)
+		hard_sort(&info);
+	else
+	{
+		a_to_b(&info);
+		b_to_a(&info);
+	}
+	free(info.stack);
 	return (0);
 }

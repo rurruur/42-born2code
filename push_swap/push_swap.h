@@ -5,61 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 12:35:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/11 15:35:55 by nakkim           ###   ########.fr       */
+/*   Created: 2022/05/19 16:11:20 by nakkim            #+#    #+#             */
+/*   Updated: 2022/05/23 16:36:32 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
 # include <stdlib.h>
-# include "./libft/libft.h"
-
-typedef struct s_node
-{
-	int				val;
-	struct s_node	*next;
-	struct s_node	*prev;
-}	t_node;
-
-typedef struct s_stack
-{
-	t_node*	list;
-	int		size;
-}	t_stack;
-
-typedef struct s_cmd
-{
-	char*			name;
-	struct s_cmd	*next;
-}	t_cmd;
+# include <unistd.h>
 
 typedef struct s_info
 {
 	int		count;
-	t_stack	*stack_a;
-	t_stack	*stack_b;
-	int		*sorted_arr;
-	t_cmd	*cmds;
+	int		*stack;
+	int		a;
+	int		chunk;
 }	t_info;
 
+void	error(void);
 int		is_num(char c);
+int		is_sorted(t_info *info);
+void	set_nums(t_info info, int argc, char **argv);
 int		get_num_count(int argc, char **argv);
-void	set_nums(int *nums, int argc, char **argv);
 void	set_info(t_info *info, int argc, char **argv);
-t_stack	*create_stack(void);
-t_node	*create_node(int val);
-void	add_top(t_node *newNode, t_stack *stack);
-t_node	*del_top(t_stack *stack);
+void	swap(int *arr, int index1, int index2);
 void	quick_sort(int *arr, int left, int right);
-void	push(t_info *info, t_stack *src, t_stack *dest, char *cmd);
-void	rotate(t_info *info, t_stack *target, char *cmd);
-void	swap(t_info *info, t_node **target, char *cmd);
-int		sort_a(t_info *info, int left, int right);
-int		sort_b(t_info *info, int left, int right);
-
-void	print_stack(t_stack *stack);
+void	indexing(t_info *info);
+void	rotate_b(t_info *info);
+void	reverse_rotate_b(t_info *info);
+void	push_b(t_info *info);
+void	push_a(t_info *info);
+void	rotate_a(t_info *info);
+void	reverse_rotate_a(t_info *info);
+void	swap_a(t_info *info);
+void	set_top(t_info *info);
+void	a_to_b(t_info *info);
+void	b_to_a(t_info *info);
+void	check_dup(t_info *info);
+void	hard_sort(t_info *info);
 
 #endif
