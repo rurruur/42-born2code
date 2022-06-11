@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:11:20 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/25 23:03:41 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/11 13:26:41 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ typedef struct s_node
 
 typedef struct s_stack
 {
-	t_node*	head;
+	t_node	*head;
 	int		size;
 }	t_stack;
 
 typedef struct s_cmd
 {
-	char*			name;
+	char			*name;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }	t_cmd;
@@ -57,7 +57,7 @@ void	add_top(t_stack *stack, t_node *new_node);
 t_node	*create_node(int val);
 t_stack	*create_stack(void);
 t_node	*pop(t_stack *stack);
-t_cmd*	create_cmd(char *cmd);
+t_cmd	*create_cmd(char *cmd);
 void	add_cmd(t_info *info, t_cmd *new_cmd);
 void	push(t_info *info, t_stack *src, t_stack *dest, char *cmd);
 void	rotate(t_info *info, t_stack *target, char *cmd);
@@ -72,5 +72,6 @@ void	hard_sort(t_info *info);
 void	check_dup(t_info *info);
 void	process_indexing(t_info *info);
 void	sort(t_info *info);
+void	set_top_min(t_info *info);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:13:04 by nakkim            #+#    #+#             */
-/*   Updated: 2022/05/25 23:04:55 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/11 13:24:59 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,6 @@ void	set_info(t_info *info, int argc, char **argv)
 	index = 0;
 	while (index < info->size)
 		add_top(info->stack_a, create_node(info->sorted_arr[index++]));
-}
-
-t_node	*create_node(int val)
-{
-	t_node	*node;
-
-	node = (t_node *)malloc(sizeof(t_node));
-	node->val = val;
-	node->next = NULL;
-	node->prev = NULL;
-	return (node);
-}
-
-t_stack	*create_stack(void)
-{
-	t_stack	*stack;
-
-	stack = (t_stack *)malloc(sizeof(t_stack));
-	stack->size = 0;
-	stack->head = NULL;
-	return (stack);
 }
 
 int	get_list_size(int argc, char **argv)
