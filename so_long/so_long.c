@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:20:12 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/13 23:13:18 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/13 23:32:39 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,9 @@ void	set_imgs(t_solong *info)
 int	main(int argc, char **argv)
 {
 	t_solong	*info;
-	
+	int	i;
+	int	j;
+
 	if (argc != 2)
 		return (0);
 	info = (t_solong *)malloc(sizeof(t_solong));
@@ -201,6 +203,15 @@ int	main(int argc, char **argv)
 	info->mlx_ptr = mlx_init();
 	info->win_ptr = mlx_new_window(info->mlx_ptr, info->width * PIXEL, info->height * PIXEL, TITLE);
 	set_imgs(info);
+
+	i = -1;
+	while (++i < info->height)
+	{
+		j = -1;
+		while (info->map[i][++j])
+			mlx_put_image_to_window(info->mlx_ptr, info->win_ptr, info->imgs.road, j * PIXEL, i * PIXEL);
+	}
+	
 	put_imgs(info);
 	mlx_hook(info->win_ptr, 2, 0, key_hook, info);
 	mlx_hook(info->win_ptr, EXIT_BTN, 0, destroy_window, info);
