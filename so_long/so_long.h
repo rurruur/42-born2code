@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:20:08 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/13 20:33:41 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/13 23:13:34 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <stdio.h>	// perror, strerror
 # include "./libft/libft.h"
 # include "./get_next_line/get_next_line.h"
-# include "./minilibx_opengl_20191021/mlx.h"
+# include "./minilibx_mms/mlx.h"
 
 typedef struct s_img
 {

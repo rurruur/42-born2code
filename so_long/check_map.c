@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:16:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/13 20:55:35 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/13 22:53:58 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,6 @@ int	is_valid_object(t_solong *info)
 
 int	is_valid_map(t_solong *info)
 {
-	int	i;
-
-	printf("width: %d, height: %d\n", info->width, info->height);
-	i = 0;
-	while (i < info->height)
-	{
-		printf("%s\n", info->map[i++]);
-	}
 	if (!is_rectangle(info))
 		error("직사각형이 아닙니다.");
 	if (!is_surrounded(info))

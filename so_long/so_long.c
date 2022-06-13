@@ -3,55 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:20:12 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/13 20:57:50 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/13 23:13:18 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	while (s[len] && s[len] != '\n')
-		len++;
-	return (len);
-}
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t n)
-{
-	size_t	index;
-	size_t	len_src;
-
-	index = 0;
-	len_src = ft_strlen(src);
-	if (n == 0)
-		return (len_src);
-	while (index < n - 1 && src[index])
-	{
-		dest[index] = src[index];
-		index++;
-	}
-	dest[index] = '\0';
-	return (len_src);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*dest;
-	size_t	len_s;
-
-	len_s = ft_strlen(s) + 1;
-	dest = (char *)malloc(sizeof(char) * len_s);
-	if (!dest)
-		return (0);
-	ft_strlcpy(dest, s, len_s);
-	return (dest);
-}
 
 void	set_map_info(t_solong *info, char *file)
 {
@@ -154,7 +113,6 @@ void	change_map(t_solong *info, int x, int y)
 		if (info->map[i][j] == START)
 			break ;
 	}
-	printf("%d, %d\n", i, j);
 	if (y)
 	{
 		if (info->map[i + y][j] == '1')
@@ -227,13 +185,11 @@ void	set_imgs(t_solong *info)
 	info->imgs.wall = mlx_xpm_file_to_image(info->mlx_ptr, "./imgs/wall.xpm", &size, &size);
 	info->imgs.collection = mlx_xpm_file_to_image(info->mlx_ptr, "./imgs/collection.xpm", &size, &size);
 	info->imgs.man = mlx_xpm_file_to_image(info->mlx_ptr, "./imgs/man.xpm", &size, &size);
-	printf("put: %p\n", info->imgs.man);
 }
 
 int	main(int argc, char **argv)
 {
 	t_solong	*info;
-	int			move;
 	
 	if (argc != 2)
 		return (0);
@@ -241,10 +197,7 @@ int	main(int argc, char **argv)
 	set_map_info(info, argv[1]);
 	get_map(info, argv[1]);
 	if (!is_valid_map(info))
-	{
 		exit(1);
-	}
-	move = 0;
 	info->mlx_ptr = mlx_init();
 	info->win_ptr = mlx_new_window(info->mlx_ptr, info->width * PIXEL, info->height * PIXEL, TITLE);
 	set_imgs(info);

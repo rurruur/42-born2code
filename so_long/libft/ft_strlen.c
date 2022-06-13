@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 19:08:06 by nakkim            #+#    #+#             */
-/*   Updated: 2021/11/10 23:17:55 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/13 22:50:23 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 	size_t	len;
 
 	len = 0;
-	while (s[len])
+	while (s[len] && s[len] != '\n')
 		len++;
 	return (len);
 }
