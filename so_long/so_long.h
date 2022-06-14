@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:20:08 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/13 23:13:34 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/14 15:10:02 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# define TITLE "hi"
+# define TITLE "so_long"
 # define ESC 53
 # define UP 13
 # define LEFT 0
@@ -27,7 +27,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>	// perror, strerror
 # include "./libft/libft.h"
 # include "./get_next_line/get_next_line.h"
 # include "./minilibx_mms/mlx.h"
@@ -55,5 +54,13 @@ typedef struct s_solong
 
 void	error(char *errorMsg);
 int		is_valid_map(t_solong *info);
+int		key_hook(int keycode, t_solong *info);
+int		destroy_window(t_solong *info);
+void	change_map(t_solong *info, int x, int y);
+void	put_imgs(t_solong s);
+void	set_map_info(t_solong *info, char *file);
+void	get_map(t_solong *info, char *file);
+void	set_imgs(t_solong *info);
+void	put_imgs(t_solong s);
 
 #endif

@@ -1,8 +1,9 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-LFLAGS = -L./minilibx_mms -lmlx -L./libft -lft
+MLX = minilibx_mms
+LFLAGS = -L./$(MLX) -lmlx -L./libft -lft
 NAME = so_long
-SRCS = so_long.c check_map.c error.c
+SRCS = so_long.c check_map.c set_modules.c hook.c
 OBJS = $(SRCS:.c=.o)
 GNL_SRCS = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 GNL_OBJS = $(GNL_SRCS:.c=.o)
@@ -17,11 +18,11 @@ libft.a:
 	cp ./libft/libft.a .
 
 libmlx.dylib:
-	make -C minilibx_mms
-	cp ./minilibx_mms/libmlx.dylib .
+	make -C $(MLX)
+	cp ./$(MLX)/libmlx.dylib .
 
 clean:
-	rm -f $(OBJS) $(GNL_OBJS) libft/*.o minilibx_mms/*.o
+	rm -f $(OBJS) $(GNL_OBJS) libft/*.o $(MLX)/*.o
 
 fclean:
 	make clean
