@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:20:12 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/14 16:38:02 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/14 16:54:48 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	get_map(&info, argv[1]);
 	if (!is_valid_map(&info))
 		exit(1);
-	info.mlx_ptr = mlx_init();
+	info.mlx_ptr = mlx_init();	// NULL 확인?
 	info.win_ptr = mlx_new_window(info.mlx_ptr,
 			info.width * PIXEL, info.height * PIXEL, TITLE);
 	set_imgs(&info);
