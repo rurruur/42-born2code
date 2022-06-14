@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:16:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/14 15:23:20 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/14 15:43:23 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,11 @@ int	is_valid_object(t_solong *info)
 	return (1);
 }
 
-int	bfs(t_solong *info)
-{
-	(void)info;
-	// 공백마다 bfs로 벽 확인
-	return (1);
-}
-
 int	is_valid_map(t_solong *info)
 {
 	if (!is_rectangle(info))
 		error("직사각형이 아닙니다.");
-	if (!is_surrounded(info) && !bfs(info))
+	if (!is_surrounded(info))
 		error("벽으로 둘러쌓여 있지 않습니다.");
 	if (!is_valid_object(info))
 		error("오브젝트 에러");
