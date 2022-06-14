@@ -5,7 +5,7 @@ _요약: 이 프로젝트는 아주 간단한 2D 게임을 만들어 볼 겁니�
 - [Mandatory part](#mandatory-part)
 	- [허용 함수](#허용-함수)
 	- [규칙](#규칙)
-	- ["so_long" 프로그램](#"solong"-프로그램)
+	- ["so_long" 프로그램](#so_long-프로그램)
 - [구현](#구현)
 	- [사용한-minilibx-라이브러리-함수](#사용한-minilibx-라이브러리-함수)
 
