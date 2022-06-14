@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:20:12 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/14 14:58:48 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/14 16:38:02 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv)
 {
 	t_solong	info;
 
+	// gnl 사용 가능?
 	if (argc != 2)
 		return (0);
 	set_map_info(&info, argv[1]);

@@ -6,27 +6,11 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:25:55 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/14 15:06:07 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/14 16:51:12 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// if (info->map[i][j + x] == '1')
-// 			return ;
-// 		if (info->map[i][j + x] == COLLECTION)
-// 		{
-// 			(info->collections)--;
-// 		}
-// 		else if (info->map[i][j + x] == END && info->collections == 0)
-// 		{
-// 			puts("end\n");
-// 			destroy_window(info);
-// 		}
-// 		if (info->map[i][j + x] != END)
-// 		{
-// 			info->map[i][j] = '0';
-// 			info->map[i][j + x] = START;
 
 void	process_changes(t_solong *info, int x, int y)
 {
