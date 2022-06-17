@@ -8,6 +8,7 @@ _요약: 이 프로젝트는 아주 간단한 2D 게임을 만들어 볼 겁니�
 	- ["so_long" 프로그램](#so_long-프로그램)
 - [구현](#구현)
 	- [사용한-minilibx-라이브러리-함수](#사용한-minilibx-라이브러리-함수)
+- [플레이 방법](#플레이-방법)
 
 ## Introduction
 이번 프로젝트의 목표는 이전에 진행했던 이러한 프로젝트와 비슷합니다 : 엄격함 (Rigor), C언어 사용하기, 기본적인 알고리즘 사용하기, 정보 검색 등
@@ -171,7 +172,7 @@ _요약: 이 프로젝트는 아주 간단한 2D 게임을 만들어 볼 겁니�
 	```
 	Loop over the given MLX pointer. Each hook that was registered prior to this will be called accordingly by order of registration.
 
-## 사용법
+## 플레이 방법
 
 ```
 $ git clone https://github.com/rurruur/42-born2code.git
