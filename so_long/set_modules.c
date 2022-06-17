@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:25:55 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/14 16:51:12 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/17 15:33:24 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	process_changes(t_solong *info, int x, int y)
 		(info->collections)--;
 	else if (info->map[y][x] == END && info->collections == 0)
 	{
-		puts("end\n");
+		write(1, "End\n", 4);
 		destroy_window(info);
 	}
 }
@@ -36,17 +36,17 @@ void	change_map(t_solong *info, int x, int y)
 		j = -1;
 		while (info->map[i][++j])
 		{
-			if (info->map[i][j] == START)
+			if (info->map[i][j] == PLAYER)
 				break ;
 		}
-		if (info->map[i][j] == START)
+		if (info->map[i][j] == PLAYER)
 			break ;
 	}
 	process_changes(info, j + x, i + y);
 	if (info->map[i + y][j + x] != END && info->map[i + y][j + x] != '1')
 	{
 		info->map[i][j] = '0';
-		info->map[i + y][j + x] = START;
+		info->map[i + y][j + x] = PLAYER;
 	}
 }
 
@@ -98,7 +98,7 @@ void	set_map_info(t_solong *info, char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		exit(1);
+		error("file error.");
 	result = get_next_line(fd);
 	height = 0;
 	while (result)

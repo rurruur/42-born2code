@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:46:59 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/14 15:12:03 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/17 15:24:16 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	put_imgs(t_solong s)
 		j = -1;
 		while (s.map[s.height][++j])
 		{
-			if (s.map[s.height][j] == START)
+			if (s.map[s.height][j] == PLAYER)
 				mlx_put_image_to_window(s.mlx_ptr, s.win_ptr, s.imgs.man,
 					j * PIXEL, s.height * PIXEL);
 			else if (s.map[s.height][j] == END)

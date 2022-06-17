@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:16:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/14 15:43:23 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/17 15:29:22 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	is_valid_object(t_solong *info)
 		j = -1;
 		while (info->map[i][++j])
 		{
-			if (info->map[i][j] == START)
+			if (info->map[i][j] == PLAYER)
 				start++;
 			else if (info->map[i][j] == END)
 				end++;
@@ -83,7 +83,7 @@ int	is_valid_object(t_solong *info)
 	return (1);
 }
 
-int	is_valid_map(t_solong *info)
+void	validate_map(t_solong *info)
 {
 	if (!is_rectangle(info))
 		error("직사각형이 아닙니다.");
@@ -91,5 +91,4 @@ int	is_valid_map(t_solong *info)
 		error("벽으로 둘러쌓여 있지 않습니다.");
 	if (!is_valid_object(info))
 		error("오브젝트 에러");
-	return (1);
 }

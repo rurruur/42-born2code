@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:20:08 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/14 15:10:02 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/17 15:29:30 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define RIGHT 2
 # define EXIT_BTN 17
 # define PIXEL 64
-# define START 'P'
+# define PLAYER 'P'
 # define END 'E'
 # define COLLECTION 'C'
 
@@ -29,7 +29,7 @@
 # include <fcntl.h>
 # include "./libft/libft.h"
 # include "./get_next_line/get_next_line.h"
-# include "./minilibx_mms/mlx.h"
+# include "./minilibx_opengl/mlx.h"
 
 typedef struct s_img
 {
@@ -53,7 +53,7 @@ typedef struct s_solong
 }	t_solong;
 
 void	error(char *errorMsg);
-int		is_valid_map(t_solong *info);
+void	validate_map(t_solong *info);
 int		key_hook(int keycode, t_solong *info);
 int		destroy_window(t_solong *info);
 void	change_map(t_solong *info, int x, int y);

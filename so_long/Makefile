@@ -1,7 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-MLX = minilibx_mms
-LFLAGS = -L./$(MLX) -lmlx -L./libft -lft
+MLX = ./minilibx_opengl
+MLX_FLAG = -framework OpenGL -framework Appkit
+LFLAGS = -L$(MLX) -lmlx $(MLX_FLAG) -L./libft -lft
 NAME = so_long
 SRCS = so_long.c check_map.c set_modules.c hook.c
 OBJS = $(SRCS:.c=.o)
@@ -10,23 +11,21 @@ GNL_OBJS = $(GNL_SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) libmlx.dylib libft.a $(GNL_OBJS)
+$(NAME): $(OBJS) $(MLX)/libmlx.a ./libft/libft.a $(GNL_OBJS)
 	$(CC) $(OBJS) $(GNL_OBJS) -o $@ $(LFLAGS)
 
-libft.a:
+./libft/libft.a:
 	make -C libft
-	cp ./libft/libft.a .
 
-libmlx.dylib:
+$(MLX)/libmlx.a:
 	make -C $(MLX)
-	cp ./$(MLX)/libmlx.dylib .
 
 clean:
 	rm -f $(OBJS) $(GNL_OBJS) libft/*.o $(MLX)/*.o
 
 fclean:
 	make clean
-	rm -f $(NAME) libft.a libmlx.dylib
+	rm -f $(NAME) ./libft/libft.a $(MLX)/libmlx.a
 
 re:
 	make fclean
