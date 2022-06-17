@@ -170,3 +170,22 @@ _요약: 이 프로젝트는 아주 간단한 2D 게임을 만들어 볼 겁니�
 	int		mlx_loop(void *mlx_ptr);
 	```
 	Loop over the given MLX pointer. Each hook that was registered prior to this will be called accordingly by order of registration.
+
+## 사용법
+
+```
+$ git clone https://github.com/rurruur/42-born2code.git
+$ cd so_long
+$ make
+$ 
+```
+
+> 사과를 모두 모아서 출구로 나가봅시다~
+
+| Key | Description |
+|:--:|:--:|
+| `W` | 위쪽 이동 |
+| `A` | 왼쪽 이동 |
+| `S` | 아래쪽 이동 |
+| `D` | 오른쪽 이동 |
+| `ESC` | 종료 |
