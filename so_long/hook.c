@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:46:59 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/17 15:24:16 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/18 15:10:49 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,35 +40,44 @@ void	put_imgs(t_solong s)
 	}
 }
 
-int	key_hook(int keycode, t_solong *info)
+void	print_changed_map(t_solong *info)
 {
 	char	*move;
 
+	(info->move)++;
+	move = ft_itoa(info->move);
+	write(1, move, ft_strlen(move));
+	write(1, "\n", 1);
+	free(move);
+	put_imgs(*info);
+}
+
+int	key_hook(int keycode, t_solong *info)
+{
+	int		changed;
+
 	if (keycode == ESC)
-		exit(1);
+		destroy_window(info);
+	changed = 0;
 	if (keycode == UP || keycode == LEFT
 		|| keycode == DOWN || keycode == RIGHT)
 	{
-		(info->move)++;
-		move = ft_itoa(info->move);
-		write(1, move, ft_strlen(move));
-		write(1, "\n", 1);
-		free(move);
 		if (keycode == UP)
-			change_map(info, 0, -1);
+			changed = change_map(info, 0, -1);
 		else if (keycode == DOWN)
-			change_map(info, 0, 1);
+			changed = change_map(info, 0, 1);
 		else if (keycode == RIGHT)
-			change_map(info, 1, 0);
+			changed = change_map(info, 1, 0);
 		else if (keycode == LEFT)
-			change_map(info, -1, 0);
-		put_imgs(*info);
+			changed = change_map(info, -1, 0);
+		if (changed)
+			print_changed_map(info);
 	}
 	return (1);
 }
 
 int	destroy_window(t_solong *info)
 {
-	(void)info;
+	mlx_destroy_window(info->mlx_ptr, info->win_ptr);
 	exit(0);
 }

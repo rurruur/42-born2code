@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:20:08 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/17 15:29:30 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/18 15:04:22 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	error(char *errorMsg);
 void	validate_map(t_solong *info);
 int		key_hook(int keycode, t_solong *info);
 int		destroy_window(t_solong *info);
-void	change_map(t_solong *info, int x, int y);
+int		change_map(t_solong *info, int x, int y);
 void	put_imgs(t_solong s);
 void	set_map_info(t_solong *info, char *file);
 void	get_map(t_solong *info, char *file);

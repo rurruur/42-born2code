@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:16:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/18 14:59:17 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/18 15:09:34 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,11 @@ int	is_surrounded(t_solong *info)
 	return (1);
 }
 
-int	is_valid_object(t_solong *info)
+int	is_valid_object(t_solong *info, int start, int end)
 {
-	int	start;
-	int	end;
 	int	i;
 	int	j;
 
-	start = 0;
-	end = 0;
 	i = -1;
 	while (++i < info->height)
 	{
@@ -91,6 +87,6 @@ void	validate_map(t_solong *info)
 		error("직사각형이 아닙니다.");
 	if (!is_surrounded(info))
 		error("벽으로 둘러쌓여 있지 않습니다.");
-	if (!is_valid_object(info))
+	if (!is_valid_object(info, 0, 0))
 		error("오브젝트 에러");
 }

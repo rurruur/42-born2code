@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:25:55 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/18 14:54:10 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/18 15:07:09 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	process_changes(t_solong *info, int x, int y)
 		(info->collections)--;
 	else if (info->map[y][x] == END && info->collections == 0)
 	{
-		write(1, "End\n", 4);
+		write(1, "Clear\n", 5);
 		destroy_window(info);
 	}
 }
 
-void	change_map(t_solong *info, int x, int y)
+int	change_map(t_solong *info, int x, int y)
 {
 	int	i;
 	int	j;
@@ -47,7 +47,9 @@ void	change_map(t_solong *info, int x, int y)
 	{
 		info->map[i][j] = '0';
 		info->map[i + y][j + x] = PLAYER;
+		return (1);
 	}
+	return (0);
 }
 
 void	set_imgs(t_solong *info)
