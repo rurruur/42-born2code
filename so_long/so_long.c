@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:20:12 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/17 15:32:56 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/18 14:53:47 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,25 @@ void	paint_road(t_solong info)
 	}
 }
 
+int	validate_extension(char *filename)
+{
+	int	len;
+
+	len = ft_strlen(filename);
+	if (len >= 5 && filename[len - 4] == '.' && filename[len - 3] == 'b'
+		&& filename[len - 2] == 'e' && filename[len - 1] == 'r')
+		return (1);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_solong	info;
 
 	if (argc != 2)
 		return (0);
+	if (!validate_extension(argv[1]))
+		error("잘못된 파일 확장자입니다.");
 	set_map_info(&info, argv[1]);
 	get_map(&info, argv[1]);
 	validate_map(&info);
