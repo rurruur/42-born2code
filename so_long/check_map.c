@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:16:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/17 15:29:22 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/18 14:59:17 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	is_valid_object(t_solong *info)
 				end++;
 			else if (info->map[i][j] == COLLECTION)
 				(info->collections)++;
+			else if (info->map[i][j] != '1' && info->map[i][j] != '0')
+				error("잘못된 문자가 포함되어 있습니다.");
 		}
 	}
 	if (start != 1 || end == 0 || info->collections == 0)
