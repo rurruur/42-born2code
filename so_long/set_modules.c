@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:25:55 by nakkim            #+#    #+#             */
-/*   Updated: 2022/06/17 15:33:24 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/06/18 14:54:10 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	set_map_info(t_solong *info, char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		error("file error.");
+		error("파일이 존재하지 않습니다.");
 	result = get_next_line(fd);
 	height = 0;
 	while (result)
