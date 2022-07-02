@@ -2,6 +2,11 @@
 
 > 간단한 쉘(나만의 작은 zsh, bash) 제작
 
+## 목차
+- [Introduction](#introduction)
+- [Mandatory part](#mandatory-part)
+- [외부 함수 설명](#외부-함수-설명)
+
 ## Introduction
 The existence of shells is linked to the very existence of IT. At the time, all coders agreed
 that communicating with a computer using aligned 1/0 switches was seriously
