@@ -320,3 +320,67 @@ For every point, if you have any doubt take bash as a reference.
 	
 	- 성공 0
 	- 실패 -1, errno 설정
+
+<br>
+
+- `stat`
+	```c
+	/*
+	** @header	<sys/stat.h>
+	** @param	const char	*path	파일 경로
+	** @param	struct stat	*buf	파일 정보 저장
+	*/
+	int	stat(const char *restrict path, struct stat *restrict buf);
+	```
+	파일의 정보를 얻음
+
+	읽기, 쓰기 or 실행 권한 없어도 가능
+
+	`lstat`은 stat()과 동일하지만, 경로 이름이 심볼릭 링크인 경우 참조하는 파일이 아닌 링크 자체에 대한 정보 반환
+
+	`fstat`은 stat()과 동일하지만, path가 상대경로를 지정하는 경우는 현재 작업 디렉토리가 아닌 fd와 연결된 디렉토리에서 파일 검색
+
+	- `int	fstat(int fd, struct stat *buf);`
+
+	리턴값: 성공시 0, 실패시 -1(with errno)
+
+<br>
+
+- `unlink`
+	```c
+	/*
+	** @header	<unistd.h>
+	** @param	const char	*path	삭제하려는 링크 이름
+	*/
+	int	unlink(const char *path);
+	```
+	path의 링크를 제거하고 링크가 참조한 파일의 링크 수를 줄임
+
+	파일의 링크 수가 0이 되고, 파일을 연 프로세스가 없으면 파일과 관련된 모든 리소스 회수
+
+	마지막 링크가 지워질 때 프로세스가 파일을 열면, 링크는 제거되지만 파일에 대한 모든 참조가 닫힐 때까지 파일 제거 지연
+
+	리턴값: 성공시 0, 실패시 -1(with errno)
+
+<br>
+
+- `execve`
+	```c
+	/*
+	** @header	<unistd.h>
+	** @param	const char	*path	파일 경로
+	** @param	char *const	argv[]	인수 목록
+	** @param	char *const	envp[]	인수가 아닌 정보
+	*/
+	int	execve(const char *path, char *const argv[], char *const envp[]);
+	```
+	호출 프로세스를 새로운 프로세스로 변환
+	
+	새 프로세스는 path로 지정된 일반 파일로 구성
+
+	The argument **argv** is a pointer to a null-terminated array of character pointers to null-terminated character strings. At least one
+     argument must be present in the array; by custom, the first element should be the **name of the executed program** (for example, the last component of path).
+
+     The argument **envp** is also a pointer to a null-terminated array of character pointers to null-terminated strings. A pointer to this array is normally stored in the global variable environ. These strings pass information to the new process that is not directly an argument to the command.
+
+	실패한 경우에만 -1 리턴
