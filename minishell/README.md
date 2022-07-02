@@ -65,7 +65,7 @@ For every point, if you have any doubt take bash as a reference.
 	/*
 	** @header	<stdio.h> <readline/readline.h> <readline/history.h>
 	** @param	const char	*prompt	프롬프트로 사용(출력)
-	** @return	char*				터미널에서 읽은 문자열
+	** @return	char*			터미널에서 읽은 문자열
 	*/
 	char	*readline(const char *prompt);
 	```
@@ -191,11 +191,11 @@ For every point, if you have any doubt take bash as a reference.
 	```c
 	/*
 	** @header	<sys/wait.h>
-	** @param	pid_t			pid			기다릴 자식 프로세스 pid
-	** @param	int				*stat_loc	종료된 프로세스 정보
-	** @param	int				options		프로세스의 종료 상태 체크 시 사용
+	** @param	pid_t		pid		기다릴 자식 프로세스 pid
+	** @param	int		*stat_loc	종료된 프로세스 정보
+	** @param	int		options		프로세스의 종료 상태 체크 시 사용
 	** @param	struct rusage	*rusage		자식 프로세스의 리소스 사용량
-	** @return	pid_t						process ID of the child process
+	** @return	pid_t				process ID of the child process
 	*/
 	pid_t	wait4(pid_t pid, int *stat_loc, int options, struct rusage *rusage);
 	```
@@ -241,10 +241,10 @@ For every point, if you have any doubt take bash as a reference.
 	```c
 	/*
 	** @header	<sys/wait.h>
-	** @param	pid_t	pid			기다릴 자식 프로세스 pid
-	** @param	int		*stat_loc	종료된 프로세스 정보
-	** @param	int		options		프로세스의 종료 상태 체크 시 사용
-	** @return	pid_t				process ID of the child process
+	** @param	pid_t	pid		기다릴 자식 프로세스 pid
+	** @param	int	*stat_loc	종료된 프로세스 정보
+	** @param	int	options		프로세스의 종료 상태 체크 시 사용
+	** @return	pid_t			process ID of the child process
 	*/
 	pid_t	waitpid(pid_t pid, int *stat_loc, int options);
 	```
@@ -256,10 +256,10 @@ For every point, if you have any doubt take bash as a reference.
 	```c
 	/*
 	** @header	<sys/wait.h>
-	** @param	pid_t	pid			기다릴 자식 프로세스 pid
-	** @param	int		*stat_loc	종료된 프로세스 정보
-	** @param	int		options		프로세스의 종료 상태 체크 시 사용
-	** @return	pid_t				process ID of the child process
+	** @param	pid_t	pid		기다릴 자식 프로세스 pid
+	** @param	int	*stat_loc	종료된 프로세스 정보
+	** @param	int	options		프로세스의 종료 상태 체크 시 사용
+	** @return	pid_t			process ID of the child process
 	*/
 	pid_t	wait3(pid_t pid, int *stat_loc, int options);
 	```	
@@ -271,9 +271,9 @@ For every point, if you have any doubt take bash as a reference.
 	```c
 	/*
 	** @header	<signal.h>
-	** @param	int		sig				시그널 번호
+	** @param	int	sig		시그널 번호
 	** @param	void	(*func)(int)	시그널 처리 핸들러
-	** @return	void	*()(int)		이전에 설정된 시그널 핸들러
+	** @return	void	*()(int)	이전에 설정된 시그널 핸들러
 	*/
 	void	(*signal(int sig, void (*func)(int));)(int);
 	or
@@ -291,7 +291,7 @@ For every point, if you have any doubt take bash as a reference.
 	** @header	<unistd.h>
 	** @param	char	*buf	작업 디렉토리 절대 경로 저장
 	** @param	size_t	size	buf 사이즈(byte)
-	** @return	char*			buf
+	** @return	char*		buf
 	*/
 	char	*getcwd(char *buf, size_t size);
 	```	
